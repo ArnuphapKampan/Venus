@@ -1,7 +1,7 @@
 import '../css/footerContent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope,faPhone,faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-function header(){
+function Footer(){
     return(
         <div className="footer-content" id="footer">
             <div className="footer-left">
@@ -52,4 +52,4 @@ function header(){
     );
 }
 
-export default header;
+export default Footer;

@@ -1,6 +1,6 @@
 import '../css/navbar.css';
 import logo from '../../logo.svg';
-function naveItems(){
+function NaveItems(){
     return(
         <div className="nav-items-me">
             <div className="logo-me"><img src={logo}  alt="logo" /></div>
@@ -16,4 +16,4 @@ function naveItems(){
     );
 }
 
-export default naveItems;
+export default NaveItems;

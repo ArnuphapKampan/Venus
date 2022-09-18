@@ -1,6 +1,6 @@
 import '../css/header.css';
 
-function header(){
+function Header(){
     return(
         <div className="header-image" id="top">
             <h2>WELCOME TO MY WEBSITE</h2>
@@ -14,4 +14,4 @@ function header(){
     );
 }
 
-export default header;
+export default Header;
