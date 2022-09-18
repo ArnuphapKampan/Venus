@@ -1,38 +1,41 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Oswald;
+  scroll-behavior: smooth;
+}
+
+.nav-items-me>ul>li>a{
+  text-decoration: none;
+  color: inherit;
+}
+
+body{
+  background-color: #132020 !important;
+
+}
+
+.up>a{
+  position: fixed;
+  align-self: center;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  top: 99%;
+  left: 99%;
+  transform: translate(-99%, -99%);
+  color:white;
+  font-size: 3rem;
+  transition:0.5s ease;
+  z-index: 3;
 }
 
-.App-link {
-  color: #61dafb;
+.up>a:hover{
+  font-size: 3.5rem;
+  color:chocolate;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1, h2, h3, h4, h5, h6{
+  font-weight: bold !important;
 }
