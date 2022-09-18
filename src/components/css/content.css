@@ -27,6 +27,7 @@
     width:inherit;
     object-fit: cover;
     object-position:center center;
+    cursor: pointer;
 }
 
 .view-bar{
@@ -54,9 +55,10 @@
     transition: .25s ease;
 }
 
-/* .object-loadMore{
+.object-loadMore{
     font-size:2rem !important;
-} */
+    cursor: pointer;
+}
 
 .object-loadMore:hover{
     color:rgb(255, 255, 255);

@@ -20,7 +20,7 @@ function Content(){
         return <Items key={index} image={val} onPopUp={onPopUp} />
     });
 
-    var imagepopup = null;
+    let imagepopup = null;
     if(!!selectedImage){
         imagepopup = <ContentPopup image={selectedImage} offPopUp={offPopUp}/>
     }
