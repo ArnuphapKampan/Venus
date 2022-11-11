@@ -22,7 +22,7 @@
 
 .header-image>h2{
     color: white;
-    font-size:8rem;
+    font-size: clamp(5rem, 10vw, 8rem);
 }
 
 .header-image>p{

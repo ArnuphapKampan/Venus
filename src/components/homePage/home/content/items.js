@@ -1,4 +1,4 @@
-import '../css/content.css';
+import '../../../css/content.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye,faImages } from '@fortawesome/free-solid-svg-icons'
 function Items(props) {

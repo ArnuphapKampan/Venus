@@ -1,24 +1,17 @@
-import './App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronCircleUp } from '@fortawesome/free-solid-svg-icons'
-import Navbar from './components/navbar/navbar'
-import Header from './components/header/header'
-import Content from './components/content/content'
-import Footer from './components/footer/footerContent'
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import React from 'react'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Login from './components/loginPage/loginPage'
+import HomePage from './components/homePage/home/home'
 function App() {
   return (
-      <>
-          <Navbar/>
-          <Header/>
-          <Content/>
-          <Footer/>
-          <div className="up" >
-              <a href="#top"><FontAwesomeIcon icon={faChevronCircleUp} /> </a>
-          </div>
-      </>
-  );
+    <Router>
+            <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route path="/sign-in" element={<Login />} />
+            </Routes>
+    </Router>
+  )
 }
-
-export default App;
+export default App

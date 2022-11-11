@@ -1,4 +1,4 @@
-import '../css/contentPopup.css'
+import '../../../css/contentPopup.css'
 
 function ContentPopup(props){
     const { image,offPopUp } = props;

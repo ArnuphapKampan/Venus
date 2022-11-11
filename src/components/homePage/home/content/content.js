@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import imageItems from '../../data/data';
-import '../css/content.css';
+import imageItems from '../../../../data/data';
+import '../../../css/content.css';
 import Carousel from './carousel'
 import ContentPopup from './contentPopup'
 import Items from './items'
