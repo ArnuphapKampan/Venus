@@ -1,9 +1,8 @@
 import React from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './components/loginPage/loginPage'
-import HomePage from './components/homePage/home/home'
+import Login from './view/loginPage/loginPage'
+import HomePage from './view/homePage/home/home'
 function App() {
   return (
     <Router>

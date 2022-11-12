@@ -1,4 +1,3 @@
-import '../../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleUp } from '@fortawesome/free-solid-svg-icons'
 import Navbar from '../navbar/navbar'

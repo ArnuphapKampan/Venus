@@ -9,11 +9,11 @@ function loginPage() {
           <form>
               <h3>Sign In</h3>
               <div className="mb-3">
-                <label>Email address</label>
+                <label>Username</label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  placeholder="Enter email"
+                  placeholder="Enter username"
                 />
               </div>
               <div className="mb-3">

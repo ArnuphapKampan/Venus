@@ -1,3 +1,31 @@
+.nav-items-me>ul>li>a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.up>a{
+  position: fixed;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  top: 99%;
+  left: 99%;
+  transform: translate(-99%, -99%);
+  color:white;
+  font-size: 3rem;
+  transition:0.5s ease;
+  z-index: 3;
+}
+
+.up>a:hover{
+  font-size: 3.5rem;
+  color:chocolate;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-weight: bold !important;
+}
+
 .navbar-me{
     overflow: hidden;
     position: fixed;
