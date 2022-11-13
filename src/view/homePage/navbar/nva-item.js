@@ -9,8 +9,8 @@ function NaveItems(){
                 <li>Customer</li>
                 <li>Building</li>
                 <li><a href="#content">Gallory</a></li>
-                <li><Link to={'/sign-in'}>Sign in</Link></li>
                 <li><a href="#footer">Contact Us</a></li>
+                <li><Link to={'/sign-in'}>Sign in</Link></li>
                 
             </ul>
             <div className="logo-me"><img src={logo}  alt="logo" /></div>

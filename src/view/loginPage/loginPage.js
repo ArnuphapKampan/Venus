@@ -1,5 +1,6 @@
 import React from 'react'
 import '../css/loginPage.css'
+import { Link } from 'react-router-dom'
 function loginPage() {
   return (
     // <div className="loginPage-main">
@@ -37,9 +38,11 @@ function loginPage() {
                 </div>
               </div>
               <div className="d-grid">
+                <Link to="/application">
                 <button type="submit" className="btn btn-primary">
                   Submit
                 </button>
+                </Link>
               </div>
               <p className="forgot-password text-right">
                 Already registered <a href="##">sign in?</a>
