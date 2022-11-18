@@ -6,12 +6,14 @@ const host = process.env.HOST_NAME
 const user = process.env.USER
 const password = process.env.PASSWD
 const database = process.env.DATABASE
+const timezone = process.env.TIME_ZONE
 
 config = {
     host: host,
     user: user,
     password: password,
-    database: database
+    database: database,
+    timezone: timezone
  }
 const connection = mysql.createConnection(config);
 connection.connect((err) => {
