@@ -57,15 +57,13 @@ exports.login = async (req, res, next) => {
         //payload return jsonwebtoken
         const payload = {
             user:{
-                name:user[0].name,
-                surname:user[0].surname,
                 username:user[0].username,
                 role:user[0].role
             }
         };
 
-        await jwt.sign(payload, 'jwtSecret',
-            {expiresIn: '3600'},
+        await jwt.sign(payload, 'KPConstruction-venusSecret',
+            {expiresIn: '1h'},
             (err, token) => {
                
                 if(err) throw err;
