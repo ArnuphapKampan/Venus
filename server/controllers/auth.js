@@ -3,7 +3,7 @@ const { checkLogin } = require('./function/checkLogin')
 const { insertUser } = require('./function/insert-user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 // @route POST localhost:8888/api/register
 // @desc  Route register
 // @access Public
@@ -62,7 +62,7 @@ exports.login = async (req, res, next) => {
             }
         };
 
-        await jwt.sign(payload, 'KPConstruction-venusSecret',
+        await jwt.sign(payload, process.env.JWT_SECRET,
             {expiresIn: '1h'},
             (err, token) => {
                
