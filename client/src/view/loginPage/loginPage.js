@@ -1,28 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../css/loginPage.css'
-import { Link } from 'react-router-dom'
-function loginPage() {
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import { loginHandler } from '../../data/function/auth'
+function LoginPage() {
+  const navigate = useNavigate();
+  const [formData,setFormData] = useState({
+      username: '',
+      password: ''
+  });
+
+  const { username, password } = formData;
+  const onChange = (e) =>{
+    setFormData({ ...formData,[e.target.name]:e.target.value });
+  }
+
+  const onSubmit = (e) =>{
+    e.preventDefault();
+
+    const user = {
+      username,
+      password
+    }
+    loginHandler(user).then(res =>{
+      toast.success(res.data);
+      navigate("/application/");
+    }).catch(err => {
+      toast.error(err.response.data.msg)
+    })
+  }
+
   return (
     // <div className="loginPage-main">
     <div className="App">
       <div className="auth-wrapper">
         <div className="auth-inner">
-          <form>
+          <form onSubmit={ e => onSubmit(e) }>
               <h3>Sign In</h3>
               <div className="mb-3">
                 <label>Username</label>
                 <input
                   type="text"
+                  name="username"
                   className="form-control"
                   placeholder="Enter username"
+                  onChange={ e => onChange(e) }
                 />
               </div>
               <div className="mb-3">
                 <label>Password</label>
                 <input
                   type="password"
+                  name="password"
                   className="form-control"
                   placeholder="Enter password"
+                  onChange={ e => onChange(e) }
                 />
               </div>
               <div className="mb-3">
@@ -37,16 +69,14 @@ function loginPage() {
                   </label>
                 </div>
               </div>
-              <div className="d-grid">
-                <Link to="/application">
+              <div className="d-grid" align="right">
                 <button type="submit" className="btn btn-primary">
-                  Submit
+                  Sign-in
                 </button>
-                </Link>
               </div>
-              <p className="forgot-password text-right">
+              {/* <p className="forgot-password text-right">
                 Already registered <a href="##">sign in?</a>
-              </p>
+              </p> */}
             </form>
           </div>
         </div>
@@ -55,4 +85,4 @@ function loginPage() {
   )
 }
 
-export default loginPage
+export default LoginPage

@@ -7,21 +7,26 @@ const Menu = () => {
             <div className="sb-sidenav-menu">
                 <div className="nav">
         
-                    <div className="sb-sidenav-menu-heading">Core</div>
-                    <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to={'/'}>
-                        <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                    <div className="sb-sidenav-menu-heading">Menu</div>
+                    <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to={""}>
+                    <i className="fas fa-tachometer-alt"></i>
+                        <div className="sb-nav-link-icon"></div>
                         Dashboard
                     </NavLink>
-                    <div className="sb-sidenav-menu-heading">Interface</div>
+                    {/* <div className="sb-sidenav-menu-heading">Interface</div> */}
                     
-                    <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link collapsed" to="/Pages" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                        <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
+                    <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" style={{color:'#6c757d'}}>
+                        <i className="fas fa-book-open"></i>
+                        <div className="sb-nav-link-icon"></div>
                         Pages
                         <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                     </NavLink>
                     <div className="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                         <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                            <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link collapsed" to="/Authentication" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                            <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to={'register/'}>
+                                Register
+                            </NavLink>
+                            <NavLink style={{color:'#6c757d'}} className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                 Authentication
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                             </NavLink>
@@ -32,7 +37,7 @@ const Menu = () => {
                                     <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to="/Forgot-Password">Forgot Password</NavLink>
                                 </nav>
                             </div>
-                            <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link collapsed" to="/Error" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                            <NavLink style={{color:'#6c757d'}} className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                 Error
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                             </NavLink>
@@ -47,10 +52,6 @@ const Menu = () => {
                     </div>
                     
                 </div>
-            </div>
-            <div className="sb-sidenav-footer">
-                <div className="small">Logged in as:</div>
-                Admin
             </div>
         </nav>
     </div>

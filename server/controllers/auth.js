@@ -13,7 +13,7 @@ exports.createRegister = async (req, res, next) => {
         //check username
         const user = await checkUsername(username);
         if(user.length > 0){
-            return res.status(400).json({errors: [{ msg: 'User already exists' }]})
+            return res.status(400).json({ msg: 'User already exists' })
         }
 
         //Encrypt passwords
@@ -43,7 +43,7 @@ exports.login = async (req, res, next) => {
         const user = await checkLogin(username);
 
         if(user.length <= 0){
-            return res.status(400).json({errors: [{ msg: 'Username Invalid Credentials' }]})
+            return res.status(400).json({ msg: 'Username Invalid Credentials' })
         }
 
         //Compare Encrypt passwords
@@ -51,7 +51,7 @@ exports.login = async (req, res, next) => {
         const isMatch = await bcrypt.compare(password,user[0].password); 
 
         if(!isMatch){
-            return res.status(400).json({errors: [{ msg: 'Password Invalid Credentials' }]})
+            return res.status(400).json({ msg: 'Password Invalid Credentials' })
         }
 
         //payload return jsonwebtoken
