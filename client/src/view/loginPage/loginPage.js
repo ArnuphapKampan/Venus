@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../css/loginPage.css'
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import { loginHandler } from '../../data/function/auth'
+import { loginHandler } from '../../function/auth'
 function LoginPage() {
   const navigate = useNavigate();
   const [formData,setFormData] = useState({
@@ -44,6 +44,7 @@ function LoginPage() {
                   name="username"
                   className="form-control"
                   placeholder="Enter username"
+                  autoFocus
                   onChange={ e => onChange(e) }
                 />
               </div>

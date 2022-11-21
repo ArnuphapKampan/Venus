@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 //Functions
-import { registerHandler } from '../../../../data/function/auth'
+import { registerHandler } from '../../../../function/auth'
 const Register = () => {
   const navigate = useNavigate();
   const [formData,setFormData] = useState({
