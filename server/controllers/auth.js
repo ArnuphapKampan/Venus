@@ -1,6 +1,7 @@
-const { checkUsername } = require('./function/checkUsername')
-const { checkLogin } = require('./function/checkLogin')
-const { insertUser } = require('./function/insert-user')
+const { checkUsername } = require('./query/checkUsername')
+const { checkLogin } = require('./query/checkLogin')
+const { updateTimeLogin } = require('./query/updateTimeLogin')
+const { insertUser } = require('./query/insert-user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -57,17 +58,23 @@ exports.login = async (req, res, next) => {
         //payload return jsonwebtoken
         const payload = {
             user:{
+                id:user[0].id,
                 username:user[0].username,
-                role:user[0].role
+                name:user[0].name,
+                surname:user[0].surname,
+                role:user[0].role,
+                image:user[0].image
             }
         };
 
+        await updateTimeLogin(username);
+        
         await jwt.sign(payload, process.env.JWT_SECRET,
             {expiresIn: '1h'},
             (err, token) => {
                
                 if(err) throw err;
-                res.json({ token });
+                res.json({ token,payload });
         });
         // res.send(message);
     }catch(err){
@@ -75,3 +82,9 @@ exports.login = async (req, res, next) => {
     }
 }
 
+
+
+exports.currentUser = async (req, res) => {
+    const user = await checkUsername(req.user.username);
+    res.json(user)
+}

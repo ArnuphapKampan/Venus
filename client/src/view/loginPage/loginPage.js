@@ -3,7 +3,9 @@ import '../css/loginPage.css'
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { loginHandler } from '../../function/auth'
+import { useDispatch } from 'react-redux';
 function LoginPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData,setFormData] = useState({
       username: '',
@@ -23,13 +25,40 @@ function LoginPage() {
       password
     }
     loginHandler(user).then(res =>{
+      dispatch({
+        type:'LOG_IN_USER',
+        payload:{
+          token:res.data.token,
+          username:res.data.payload.user.username,
+          role:res.data.payload.user.role
+        }
+      });
+      localStorage.setItem('token',res.data.token);
+      localStorage.setItem('items', JSON.stringify(
+        { 
+          id: res.data.payload.user.id,
+          name: res.data.payload.user.name,
+          surname: res.data.payload.user.surname,
+          role: res.data.payload.user.role,
+          image: res.data.payload.user.image
+        }
+      ));
       toast.success(res.data);
-      navigate("/application/");
+      roleBasedRedirect(res.data.payload.user.role);
     }).catch(err => {
       toast.error(err.response.data.msg)
     })
   }
 
+  const roleBasedRedirect = (res) => {
+    if(res === 'admin'){
+      navigate("/application/register/");
+      window.location.reload(); 
+    }else{
+      navigate("/application/");
+      window.location.reload(); 
+    }
+  }
   return (
     // <div className="loginPage-main">
     <div className="App">
