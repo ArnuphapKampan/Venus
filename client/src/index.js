@@ -4,11 +4,8 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom'
 //Redux
 import { Provider } from 'react-redux';
-import { legacy_createStore as createStore} from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './reducer/index';
+import { store } from './reducer/index';
 
-const store = createStore(rootReducer,composeWithDevTools());
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //<React.StrictMode>

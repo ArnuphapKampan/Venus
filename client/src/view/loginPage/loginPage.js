@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { loginHandler } from '../../function/auth'
 import { useDispatch } from 'react-redux';
+import { login } from '../../reducer/userReducer';
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,25 +25,17 @@ function LoginPage() {
       username,
       password
     }
-    loginHandler(user).then(res =>{
-      dispatch({
-        type:'LOG_IN_USER',
-        payload:{
-          token:res.data.token,
-          username:res.data.payload.user.username,
-          role:res.data.payload.user.role
-        }
-      });
+    loginHandler(user).then( (res) =>{
+      //useless because refresh new page store to empty
+      const data = {
+            token:res.data.token,
+            username:res.data.payload.user.username,
+            role:res.data.payload.user.role
+      }
+      dispatch(login(data))
+
       localStorage.setItem('token',res.data.token);
-      localStorage.setItem('items', JSON.stringify(
-        { 
-          id: res.data.payload.user.id,
-          name: res.data.payload.user.name,
-          surname: res.data.payload.user.surname,
-          role: res.data.payload.user.role,
-          image: res.data.payload.user.image
-        }
-      ));
+
       toast.success(res.data);
       roleBasedRedirect(res.data.payload.user.role);
     }).catch(err => {

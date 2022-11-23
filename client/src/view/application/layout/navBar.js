@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch,useSelector } from 'react-redux'
+import { logout } from '../../../reducer/userReducer';
 const NavBar = () => {
     const dispatch = useDispatch();
-    const userLocal = JSON.parse(localStorage.getItem('items'));
-    const image = (userLocal.image !== "")?userLocal.image:"https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
+    const { userStorage } = useSelector((state) => ({ ...state }))
+    const user = userStorage.user;
+    const image = (user.image)?user.image:"https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
     
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -21,16 +22,13 @@ const NavBar = () => {
     }
 
     const handleLogout = () => {
-        dispatch({
-            type: 'LOG_OUT_USER',
-            payload: null
-        });
+        dispatch(logout())
         navigate("/");
     }
     
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <Link className="navbar-brand" to="" align="center">{ userLocal.role.toUpperCase() }</Link>
+        <Link className="navbar-brand" to="" align="center">{ (user.role)?user.role.toUpperCase():"" }</Link>
         <button className="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" onClick={handleTrigger}><i className="fas fa-bars"></i></button>
     
         <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">

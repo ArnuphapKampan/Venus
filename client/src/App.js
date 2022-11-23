@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //Redux
 import { useDispatch } from 'react-redux';
+import { login } from './reducer/userReducer';
 //import function
 import { currentUser } from './function/auth';
 function App() {
@@ -23,15 +24,14 @@ function App() {
     if(idTokenResult){
       currentUser(idTokenResult).then( res => {
         //get value into store redux
-        dispatch({
-          type: 'LOG_IN_USER',
-          payload: { 
-            id: res.data[0].id,
-            name: res.data[0].name,
-            surname: res.data[0].surname,
-            role: res.data[0].role
-          }
-        });
+        const payload = { 
+          id: res.data[0].id,
+          name: res.data[0].name,
+          surname: res.data[0].surname,
+          role: res.data[0].role,
+          image: res.data[0].image
+        }
+        dispatch(login(payload))
       }).catch( err => {
         console.log(err)
       });

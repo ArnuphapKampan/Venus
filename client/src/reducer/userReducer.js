@@ -1,11 +1,22 @@
-export function userReducer(state = null, action){
-    switch(action.type) {
-        case 'LOG_IN_USER':
-            return action.payload;
-        case 'LOG_OUT_USER':
-            localStorage.clear();
-            return action.payload;
-        default:
-            return state;
-    }
+import { createSlice } from "@reduxjs/toolkit"
+
+const initialState = {
+    user: [],
+    loading:false
 }
+
+export const userSlice = createSlice({
+    name: 'userStore',
+    initialState: initialState,
+    reducers:{ 
+        login:(state,action) => {
+            state.user = action.payload;
+        },
+        logout:(state,action) => {
+            localStorage.clear();
+            state.user = [];
+        }
+    }
+});
+export const { login, logout } = userSlice.actions;
+export default userSlice.reducer
