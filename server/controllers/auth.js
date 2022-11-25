@@ -60,8 +60,6 @@ exports.login = async (req, res, next) => {
             user:{
                 id:user[0].id,
                 username:user[0].username,
-                name:user[0].name,
-                surname:user[0].surname,
                 role:user[0].role,
                 image:user[0].image
             }
@@ -70,7 +68,7 @@ exports.login = async (req, res, next) => {
         await updateTimeLogin(username);
         
         await jwt.sign(payload, process.env.JWT_SECRET,
-            {expiresIn: '1h'},
+            {expiresIn: '24h'},
             (err, token) => {
                
                 if(err) throw err;

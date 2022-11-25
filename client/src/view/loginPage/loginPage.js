@@ -45,7 +45,7 @@ function LoginPage() {
 
   const roleBasedRedirect = (res) => {
     if(res === 'admin'){
-      navigate("/application/register/");
+      navigate("/application/");
       window.location.reload(); 
     }else{
       navigate("/application/");

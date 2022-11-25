@@ -14,6 +14,9 @@ import { useDispatch } from 'react-redux';
 import { login } from './reducer/userReducer';
 //import function
 import { currentUser } from './function/auth';
+//protected route
+import UserRoute from './routes/userRoute'
+
 function App() {
   const dispatch = useDispatch();
 
@@ -26,8 +29,7 @@ function App() {
         //get value into store redux
         const payload = { 
           id: res.data[0].id,
-          name: res.data[0].name,
-          surname: res.data[0].surname,
+          username: res.data[0].username,
           role: res.data[0].role,
           image: res.data[0].image
         }
@@ -43,9 +45,11 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/sign-in" element={<LoginPage />} />
-              <Route path="application/" element={<Application/>}>
-                <Route  path="" element={<Content />} />
-                <Route  path="register/" element={<Register />} />  
+              <Route element={<UserRoute />}>
+                <Route path="application/" element={<Application/>}>
+                  <Route  path="" element={<Content />} />
+                  <Route  path="register/" element={<Register />} />  
+                </Route>
               </Route>
             </Routes>
            </>
