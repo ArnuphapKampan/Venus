@@ -5,11 +5,9 @@ const { insertUser } = require('./query/insert-user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-// @route POST localhost:8888/api/register
-// @desc  Route register
-// @access Public
+
 exports.createRegister = async (req, res, next) => {
-    const { name,surname,username,password } = req.body;
+    const { name,surname,username,image,password } = req.body;
     try{
         //check username
         const user = await checkUsername(username);
@@ -25,6 +23,7 @@ exports.createRegister = async (req, res, next) => {
             name:name,
             surname:surname,
             username:username,
+            image:image,
             password:passwordEncrypt
         };
 

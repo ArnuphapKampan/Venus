@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import FileUpload from '../fileUpload';
+
 //Functions
 import { registerHandler } from '../../../../function/auth'
 //active menu
@@ -21,11 +23,12 @@ const Register = () => {
       name: '',
       surname: '',
       username: '',
+      image: '',
       password: '',
       password2: ''
   });
 
-  const { name, surname, username, password, password2 } = formData;
+  const { name, surname, username, image, password, password2 } = formData;
   const onChange = (e) =>{
     setFormData({ ...formData,[e.target.name]:e.target.value });
   }
@@ -39,6 +42,7 @@ const Register = () => {
         name,
         surname,
         username,
+        image,
         password
       }
       registerHandler(newUser).then(res =>{
@@ -63,7 +67,7 @@ const Register = () => {
               <input className="form-control mb-3" type="text" name="username" placeholder="username" required onChange={ e => onChange(e) } />
               <input className="form-control mb-3" type="password" name="password" placeholder="password" required onChange={ e => onChange(e) } />
               <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="file" name="image" onChange={ e => onChange(e) } />
+              <FileUpload formData = { formData } setFormData = { setFormData }/>
               <button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>
             </form>
             </div>
