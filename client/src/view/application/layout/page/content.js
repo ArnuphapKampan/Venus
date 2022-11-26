@@ -1,6 +1,17 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+//active menu
+import { activeMenu } from '../../../../reducer/userReducer';
+import { useDispatch } from 'react-redux';
 const Content = () => {
+
+    //active menu
+   const dispatch = useDispatch();
+   const activePath = "dashboard";
+   useEffect(() => {
+       dispatch(activeMenu(activePath));
+   },[dispatch])
+   //active menu
+
   return (
     <main>
         <div className="container-fluid">

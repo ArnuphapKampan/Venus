@@ -6,6 +6,7 @@ import HomePage from './view/homePage/home/home'
 import Application from './view/application/application'
 import Content from './view/application/layout/page/content'
 import Register from './view/application/layout/page/register'
+import UserList from './view/application/layout/page/userList'
 //Notify
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,7 +49,8 @@ function App() {
               <Route element={<UserRoute />}>
                 <Route path="application/" element={<Application/>}>
                   <Route  path="" element={<Content />} />
-                  <Route  path="register/" element={<Register />} />  
+                  <Route  path="user/" element={<UserList />} /> 
+                  <Route  path="user/register/" element={<Register />} />  
                 </Route>
               </Route>
             </Routes>
