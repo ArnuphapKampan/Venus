@@ -10,10 +10,10 @@ const { auth } = require('../middleware/auth');
 // @access Public
 router.post('/person',auth,create);
 
-// @route POST localhost:8888/api/register
+// @route POST localhost:8888/api/user-list
 // @desc  Route list
 // @access Public
-router.get('/person',auth,list);
+router.post('/user-list',auth,list);
 
 // @route POST localhost:8888/api/register
 // @desc  Route read

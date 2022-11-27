@@ -1,9 +1,16 @@
+const { userLists } = require('./query/userLists')
+
 exports.create = async (req, res) => {
     res.send("hello create person")
 }
 
 exports.list = async (req, res) => {
-    res.send("hello list person")
+    try{
+        const userList = await userLists();
+        res.json(userList);
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
 exports.read = async (req, res) => {
