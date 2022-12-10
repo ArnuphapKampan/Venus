@@ -54,6 +54,10 @@ exports.login = async (req, res, next) => {
             return res.status(400).json({ msg: 'Password Invalid Credentials' })
         }
 
+        if(user[0].enable !== "enable"){
+            return res.status(400).json({ msg: 'Username has not been approved yet.' })
+        }
+
         //payload return jsonwebtoken
         const payload = {
             user:{

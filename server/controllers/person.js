@@ -1,8 +1,8 @@
 const { userLists } = require('./query/userLists')
-
-exports.create = async (req, res) => {
-    res.send("hello create person")
-}
+const { userApprovs } = require('./query/userApprovs')
+// exports.create = async (req, res) => {
+//     res.send("hello create person")
+// }
 
 exports.list = async (req, res) => {
     try{
@@ -13,14 +13,24 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.read = async (req, res) => {
-    res.send("hello read person")
+exports.approv = async (req, res) => {
+
+    try{
+        const result = await userApprovs(req.body);
+        res.json(result);
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
-exports.update = async (req, res) => {
-    res.send("hello update person")
-}
+// exports.read = async (req, res) => {
+//     res.send("hello read person")
+// }
 
-exports.remove = async (req, res) => {
-    res.send("hello remove person")
-}
+// exports.update = async (req, res) => {
+//     res.send("hello update person")
+// }
+
+// exports.remove = async (req, res) => {
+//     res.send("hello remove person")
+// }
