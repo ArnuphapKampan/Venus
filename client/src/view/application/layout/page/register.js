@@ -25,7 +25,8 @@ const Register = () => {
 
   const navigate = useNavigate();
   const [profile,setProfile] = useState();
-  const [save,setSave] = useState(false);
+  const [loading,setLoading] = useState(false);
+  const [uploading,setUploading] = useState('');
   const [formData,setFormData] = useState({
       name: '',
       surname: '',
@@ -45,7 +46,8 @@ const Register = () => {
       toast.warning('Password is not match')
     }else{
         if(profile){
-        setSave(true);
+        setLoading(true);
+        setUploading('Uploading To Cloudinary . . .');
         Resizer.imageFileResizer(
               profile[0],
                 720,
@@ -70,7 +72,7 @@ const Register = () => {
                 "base64"
             )
         }else{
-          setSave(true);
+          setLoading(true);
           insertUser();
         }
 
@@ -78,6 +80,7 @@ const Register = () => {
   }
 
   const insertUser = (res) => {
+      setUploading('Uploading Info To Database . . .');
       const image = (res)?JSON.stringify(res.data):'';
       const newUser = {
         name,
@@ -88,11 +91,13 @@ const Register = () => {
       }
 
       registerHandler(newUser).then(res =>{
-        setSave(false);
+        setTimeout(function(){
+        setLoading(false);
         toast.success(res.data);
         navigate("/application/user/");
+        }, 1500); 
       }).catch(err => {
-        setSave(false);
+        setLoading(false);
         toast.error(err.response.data.msg)
       })
   }
@@ -140,12 +145,12 @@ const Register = () => {
               <input className="form-control mb-3" type="password" name="password" placeholder="password" required onChange={ e => onChange(e) } />
               <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" required onChange={ e => onChange(e) } />
               <FileUpload setProfile = { setProfile } />
-              { (save)?(
+              { (loading)?(
               <Section>
                   <Article>
                       <ReactLoading type={'spinningBubbles'} color="#000" />
                       <br/>
-                      <Prop>saving . . .</Prop>
+                      <Prop>{uploading}</Prop>
                   </Article>
               </Section>):
               (<button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
