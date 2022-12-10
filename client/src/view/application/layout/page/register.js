@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import FileUpload from '../fileUpload';
-
+import { Section,Prop,Article } from "./generic";
+import ReactLoading from 'react-loading';
 //Functions
 import { registerHandler } from '../../../../function/auth'
 //active menu
 import { activeMenu } from '../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import Resizer from "react-image-file-resizer";
 const Register = () => {
+
+  const authtoken = localStorage.getItem('token')
 
    //active menu
    const dispatch = useDispatch();
@@ -19,16 +24,17 @@ const Register = () => {
    //active menu
 
   const navigate = useNavigate();
+  const [profile,setProfile] = useState();
+  const [save,setSave] = useState(false);
   const [formData,setFormData] = useState({
       name: '',
       surname: '',
       username: '',
-      image: '',
       password: '',
       password2: ''
   });
 
-  const { name, surname, username, image, password, password2 } = formData;
+  const { name, surname, username, password, password2 } = formData;
   const onChange = (e) =>{
     setFormData({ ...formData,[e.target.name]:e.target.value });
   }
@@ -38,22 +44,88 @@ const Register = () => {
     if(password !== password2){
       toast.warning('Password is not match')
     }else{
+        if(profile){
+        setSave(true);
+        Resizer.imageFileResizer(
+              profile[0],
+                720,
+                720,
+                "JPEG",
+                100,
+                0,
+                (uri) => {
+                    axios.post(process.env.REACT_APP_API+'/cloudinary-image',
+                    { 
+                        image: uri
+                    },
+                    {
+                        headers:{ authtoken }
+                    }
+                    ).then(res => {
+                        insertUser(res);
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                },
+                "base64"
+            )
+        }else{
+          setSave(true);
+          insertUser();
+        }
+
+    }
+  }
+
+  const insertUser = (res) => {
+      const image = (res)?JSON.stringify(res.data):'';
       const newUser = {
         name,
         surname,
         username,
-        image,
+        image: image,
         password
       }
+
       registerHandler(newUser).then(res =>{
+        setSave(false);
         toast.success(res.data);
         navigate("/application/user/");
-
       }).catch(err => {
+        setSave(false);
         toast.error(err.response.data.msg)
       })
-    }
   }
+
+
+    //   const handleImageFile = (e) => {
+    //     if(profile){
+    //         Resizer.imageFileResizer(
+    //           profile[0],
+    //             720,
+    //             720,
+    //             "JPEG",
+    //             100,
+    //             0,
+    //             (uri) => {
+    //                 axios.post(process.env.REACT_APP_API+'/cloudinary-image',
+    //                 { 
+    //                     image: uri
+    //                 },
+    //                 {
+    //                     headers:{ authtoken }
+    //                 }
+    //                 ).then(res => {
+    //                     setFormData({...formData, image:JSON.stringify(res.data)})
+    //                 }).catch(err => {
+    //                     console.log(err)
+    //                 })
+    //             },
+    //             "base64"
+    //         )
+
+    //     }
+    // }
 
   return (
     <main>
@@ -67,8 +139,16 @@ const Register = () => {
               <input className="form-control mb-3" type="text" name="username" placeholder="username" required onChange={ e => onChange(e) } />
               <input className="form-control mb-3" type="password" name="password" placeholder="password" required onChange={ e => onChange(e) } />
               <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" required onChange={ e => onChange(e) } />
-              <FileUpload formData = { formData } setFormData = { setFormData }/>
-              <button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>
+              <FileUpload setProfile = { setProfile } />
+              { (save)?(
+              <Section>
+                  <Article>
+                      <ReactLoading type={'spinningBubbles'} color="#000" />
+                      <br/>
+                      <Prop>saving . . .</Prop>
+                  </Article>
+              </Section>):
+              (<button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
             </form>
             </div>
             </div>

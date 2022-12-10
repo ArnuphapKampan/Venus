@@ -5,8 +5,7 @@ import { activeMenu } from '../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //table
 import { Table, Tag } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar,Image } from 'antd';
 import Moment from 'react-moment';
 //query info
 import { userLists } from '../../../../query/userLists';
@@ -44,7 +43,7 @@ const UserList = () => {
           title: 'Profile',
           key: 'id',
           dataIndex: 'profile',
-          render: (text) => <a href={text} target="_blank" rel="noreferrer noopener"><Avatar src={text} shape="square" size={50} icon={<UserOutlined />} /></a>,
+          render: (text) => <Avatar shape="square" size={50} src={<Image src={(text)?text:'https://res.cloudinary.com/djcea5fgx/image/upload/v1670595775/no-image_sdhwwa.jpg'} />} />
         }
         ,
         {
