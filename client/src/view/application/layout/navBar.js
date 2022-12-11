@@ -6,8 +6,7 @@ const NavBar = () => {
     const dispatch = useDispatch();
     const { userStorage } = useSelector((state) => ({ ...state }))
     const user = userStorage.user;
-    const imageParse = (user.image)?JSON.parse(user.image):"";
-    const image = (imageParse)?imageParse.url:"https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
+    const image = (user.image)?user.image:"https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
     
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
