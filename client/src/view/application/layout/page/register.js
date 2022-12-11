@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import FileUpload from '../fileUpload';
 import { Section,Prop,Article } from "./generic";
 import ReactLoading from 'react-loading';
+import { Radio } from 'antd';
 //Functions
 import { registerHandler } from '../../../../function/auth'
 //active menu
@@ -27,23 +28,33 @@ const Register = () => {
   const [profile,setProfile] = useState();
   const [loading,setLoading] = useState(false);
   const [uploading,setUploading] = useState('');
+  const roles = [
+    { label: 'STAFF', value: 'staff' },
+    { label: 'ADMIN', value: 'admin' },
+  ];
   const [formData,setFormData] = useState({
       name: '',
       surname: '',
       username: '',
       password: '',
-      password2: ''
+      password2: '',
+      role: ''
   });
 
-  const { name, surname, username, password, password2 } = formData;
+  const { name, surname, username, password, password2, role } = formData;
   const onChange = (e) =>{
     setFormData({ ...formData,[e.target.name]:e.target.value });
   }
+  const onChangeRole = ({ target: { value } }) => {
+    setFormData({ ...formData, role:value });
+  };
 
   const onSubmit = (e) =>{
     e.preventDefault();
     if(password !== password2){
-      toast.warning('Password is not match')
+      toast.warning('Password is not match.')
+    }else if(role === ""){
+      toast.warning('Please choose role.')
     }else{
         if(profile){
         setLoading(true);
@@ -87,7 +98,8 @@ const Register = () => {
         surname,
         username,
         image: image,
-        password
+        password,
+        role
       }
 
       registerHandler(newUser).then(res =>{
@@ -103,35 +115,6 @@ const Register = () => {
   }
 
 
-    //   const handleImageFile = (e) => {
-    //     if(profile){
-    //         Resizer.imageFileResizer(
-    //           profile[0],
-    //             720,
-    //             720,
-    //             "JPEG",
-    //             100,
-    //             0,
-    //             (uri) => {
-    //                 axios.post(process.env.REACT_APP_API+'/cloudinary-image',
-    //                 { 
-    //                     image: uri
-    //                 },
-    //                 {
-    //                     headers:{ authtoken }
-    //                 }
-    //                 ).then(res => {
-    //                     setFormData({...formData, image:JSON.stringify(res.data)})
-    //                 }).catch(err => {
-    //                     console.log(err)
-    //                 })
-    //             },
-    //             "base64"
-    //         )
-
-    //     }
-    // }
-
   return (
     <main>
         <div className="container-fluid">
@@ -139,11 +122,12 @@ const Register = () => {
             <h1 className="mt-4">Register</h1>
             <div className="col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
-              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="username" placeholder="username" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password" placeholder="password" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autocomplete="off" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autocomplete="off" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="text" name="username" placeholder="username" autocomplete="off" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="password" name="password" placeholder="password" autocomplete="off" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" autocomplete="off" required onChange={ e => onChange(e) } />
+              <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
               <FileUpload setProfile = { setProfile } />
               { (loading)?(
               <Section>

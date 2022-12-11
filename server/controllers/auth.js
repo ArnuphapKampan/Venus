@@ -7,12 +7,12 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 exports.createRegister = async (req, res, next) => {
-    const { name,surname,username,image,password } = req.body;
+    const { name,surname,username,image,password,role } = req.body;
     try{
         //check username
         const user = await checkUsername(username);
         if(user.length > 0){
-            return res.status(400).json({ msg: 'User already exists' })
+            return res.status(400).json({ msg: 'User already exists.' })
         }
 
         //Encrypt passwords
@@ -24,7 +24,8 @@ exports.createRegister = async (req, res, next) => {
             surname:surname,
             username:username,
             image:image,
-            password:passwordEncrypt
+            password:passwordEncrypt,
+            role:role
         };
 
         const message = await insertUser(info);

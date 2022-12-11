@@ -3,6 +3,10 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+//Import Routes Example
+// const personRoutes = require('./routes/person')
+
+//Import Routes AUTO
 const { readdirSync } = require('fs')
 require('dotenv').config();
 
@@ -17,6 +21,9 @@ app.listen(port,() => console.log('Server is running on port',port))
 app.use(morgan("dev"));
 app.use(bodyParser.json({limit:"2mb"}))
 app.use(cors())
+
+//Import Routes Example
+// app.use("/api",personRoutes)
 
 //Import Routes AUTO
 readdirSync('./routes')
