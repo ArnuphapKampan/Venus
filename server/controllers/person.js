@@ -1,5 +1,6 @@
 const { userLists } = require('./query/userLists')
 const { userApprovs } = require('./query/userApprovs')
+const { userRemoves } = require('./query/userRemoves')
 // exports.create = async (req, res) => {
 //     res.send("hello create person")
 // }
@@ -31,6 +32,11 @@ exports.approv = async (req, res) => {
 //     res.send("hello update person")
 // }
 
-// exports.remove = async (req, res) => {
-//     res.send("hello remove person")
-// }
+exports.remove = async (req, res) => {
+    try{
+        const userRemove = await userRemoves(req.params.id);
+        res.json(userRemove);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}

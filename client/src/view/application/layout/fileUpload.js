@@ -13,21 +13,6 @@ const FileUpload = ({ setProfile }) => {
     const [loaddingProfile,setLoaddingProfile] = useState(false);
     const [preImage, setPreImage] = useState();
 
-    // const handleImageFileRemove = (public_id) => {
-    //     setLoaddingProfile(true)
-    //     axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
-    //     { public_id },
-    //     {
-    //         headers:{ authtoken }
-    //     }
-    //     ).then(res => {
-    //         setFormData({...formData, image:""})
-    //         setLoaddingProfile(false)
-    //     }).catch(err => {
-    //         console.log(err)
-    //     });
-    // }
-
     const preView = (e) => {
         setLoaddingProfile(true)
         setProfile(e.target.files);

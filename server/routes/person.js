@@ -33,6 +33,6 @@ router.post('/user-approv',auth,approv);
 // @route POST localhost:8888/api/register
 // @desc  Route remove
 // @access Public
-// router.delete('/person/:id',auth,remove);
+router.delete('/user-remove/:id',auth,remove);
 
 module.exports = router;

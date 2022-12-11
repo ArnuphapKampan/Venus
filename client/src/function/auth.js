@@ -17,3 +17,9 @@ export const currentUser = async (authtoken) => {
         headers:{ authtoken }
     });
 }
+
+export const handlerRemove = async (id,authtoken) => {
+    return await axios.delete(process.env.REACT_APP_API+`/user-remove/${id}`,{
+        headers:{ authtoken }
+    });
+}
