@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 //active menu
-import { activeMenu } from '../../../../reducer/userReducer';
+import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //table
 import { Table, Tag } from 'antd';
@@ -13,9 +13,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 //Functions
-import { handlerRemove } from '../../../../function/auth'
+import { handlerRemove } from '../../../../../function/auth'
 //query info
-import { userLists } from '../../../../query/userLists';
+import { userLists } from '../../../../../query/userLists';
 const UserList = () => {
 
     const [infoUserList,setInfoUserList] = useState([])
@@ -25,26 +25,9 @@ const UserList = () => {
     const dispatch = useDispatch();
     const activePath = "user";
     useEffect(() => {
-        const authtoken = localStorage.getItem('token')
         dispatch(activeMenu(activePath));
-        userLists(authtoken).then( (res) => {
-          setInfoUserList(
-                  res.data.map( (row) => (
-                      {
-                          key: row.id,
-                          profile: row.profile,
-                          name: row.name+' '+row.surname,
-                          username: row.username,
-                          role: row.role,
-                          lastLogin: row.update_date,
-                          enable: row.enable,
-                          public_id: row.public_id
-                      })
-                  ));
-        }).catch( err => {
-          console.log(err)
-        });
-    
+        loadUserList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dispatch]);
     //active menu
 
@@ -65,7 +48,7 @@ const UserList = () => {
                     })
                 ));
       }).catch( err => {
-        console.log(err)
+        console.log(err.response.data.msg)
       });
     }
 
@@ -83,7 +66,7 @@ const UserList = () => {
                     ).then(res => {
                       (res.data.changedRows >= 1)?toast.success("Change status successful"):toast.warning("Cannot change admin status");
                     }).catch(err => {
-                      toast.error(err.data)
+                      toast.error(err.response.data.msg)
                     })
     }
 
@@ -111,7 +94,7 @@ const UserList = () => {
            toast.success("Removed Image at Cloudinary Successful")
            userRemove(info)
         }).catch(err => {
-            console.log(err)
+            console.log(err.response.data.msg)
         });
       }else{
         userRemove(info)
@@ -124,7 +107,7 @@ const UserList = () => {
         loadUserList();
       }).catch((err) =>{
         toast.error("Remove Error")
-        console.log(err.data)
+        console.log(err.response.data.msg)
       })
     }
 
@@ -178,18 +161,23 @@ const UserList = () => {
         {
           key: 'id',
           align: 'center',
-          render: (info) => <div className="d-flex justify-content-center"> <EditOutlined className="btn text-sm text-info" /><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="btn text-sm text-danger" /> </div>
+          render: (info) => <div className="d-flex justify-content-center">  <NavLink className="nav-link" align="right" to={`editUser/${info.key}`} ><EditOutlined className="btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="btn text-sm text-danger" /> </div>
         }
       ];
       
   return (
     <main>
         <div className="container-fluid">
-            <h1 className="mt-4">UserList</h1>
-            <NavLink className="nav-link" align="right" to="register/" >
-                <button type="button" className="btn btn-success" name="btn-register" >Create User</button>
-            </NavLink>
-            <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={infoUserList} />
+            <h1 className="mt-4">User List</h1>
+              <table align="right">
+                <th></th>
+                <th>
+                <NavLink className="nav-link" align="right" to="register/" >
+                    <button type="button" className="btn btn-success" name="btn-register" >Add User</button>
+                </NavLink>
+                </th>
+              </table>
+              <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={infoUserList} />
         </div>
     </main>
   )

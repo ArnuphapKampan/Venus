@@ -1,9 +1,9 @@
 const { userLists } = require('./query/userLists')
 const { userApprovs } = require('./query/userApprovs')
 const { userRemoves } = require('./query/userRemoves')
-// exports.create = async (req, res) => {
-//     res.send("hello create person")
-// }
+const { userInfo } = require('./query/userInfo')
+const { userChangePassword } = require('./query/userChangePassword')
+const bcrypt = require('bcryptjs');
 
 exports.list = async (req, res) => {
     try{
@@ -24,13 +24,33 @@ exports.approv = async (req, res) => {
     }
 }
 
-// exports.read = async (req, res) => {
-//     res.send("hello read person")
-// }
+exports.read = async (req, res) => {
+    try{
+        const result = await userInfo(req.params.id);
+        res.json(result);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
 
-// exports.update = async (req, res) => {
-//     res.send("hello update person")
-// }
+exports.changePassword = async (req, res) => {
+    const { id,password } = req.body;
+    try{
+        //Encrypt passwords
+        const salt = await bcrypt.genSalt(10);
+        const passwordEncrypt = await bcrypt.hash(password, salt);
+
+        let info = {
+            id:id,
+            password:passwordEncrypt
+        };
+
+        const message = await userChangePassword(info);
+        res.send(message);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
 
 exports.remove = async (req, res) => {
     try{

@@ -23,3 +23,15 @@ export const handlerRemove = async (id,authtoken) => {
         headers:{ authtoken }
     });
 }
+
+export const handlerGetInfoEditUser = async (id,authtoken) => {
+    return await axios.get(process.env.REACT_APP_API+`/person/${id}`,{
+        headers:{ authtoken }
+    });
+}
+
+export const handlerPassword = async (info,authtoken) => {
+    return await axios.post(process.env.REACT_APP_API+'/change-user-password',info,{
+        headers:{ authtoken }
+    });
+}

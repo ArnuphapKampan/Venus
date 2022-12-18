@@ -9,7 +9,8 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
 
-const FileUpload = ({ setProfile }) => {
+const FileUpload = ({ setProfile, profileOld, setProfileOld }) => {
+   
     const [loaddingProfile,setLoaddingProfile] = useState(false);
     const [preImage, setPreImage] = useState();
 
@@ -28,6 +29,7 @@ const FileUpload = ({ setProfile }) => {
         document.getElementById("icon-button-file").value = "";
         setPreImage();
         setProfile();
+        setProfileOld();
     }
 
   return (
@@ -46,11 +48,11 @@ const FileUpload = ({ setProfile }) => {
             </IconButton>
         </label>
     </div>
-    { (preImage)?(
+    { (preImage || profileOld)?(
     <div className="form-group text-center">
     <span className="avatar-item">
         <Badge count="X" title="remove" onClick={ preViewRemove  } style={{cursor:"pointer"}}>
-            <Avatar src={preImage} shape="square" size={250} icon={<UserOutlined />} />
+            <Avatar src={preImage || profileOld} shape="square" size={250} icon={<UserOutlined />} />
         </Badge>
     </span>
     </div>

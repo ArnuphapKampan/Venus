@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import FileUpload from '../fileUpload';
-import { Section,Prop,Article } from "../generic";
+import FileUpload from '../../fileUpload';
+import { Section,Prop,Article } from "../../generic";
 import ReactLoading from 'react-loading';
 import { Radio } from 'antd';
 //Functions
-import { registerHandler } from '../../../../function/auth'
+import { registerHandler } from '../../../../../function/auth'
 //active menu
-import { activeMenu } from '../../../../reducer/userReducer';
+import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
@@ -77,7 +77,7 @@ const Register = () => {
                     ).then(res => {
                         insertUser(res);
                     }).catch(err => {
-                        console.log(err)
+                        console.log(err.response.data.msg)
                     })
                 },
                 "base64"
@@ -119,7 +119,7 @@ const Register = () => {
     <main>
         <div className="container-fluid">
             <div className="container">
-            <h1 className="mt-4">Register</h1>
+            <h1 className="mt-4">Add User</h1>
             <div className="col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
               <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" required onChange={ e => onChange(e) } />

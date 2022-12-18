@@ -5,8 +5,10 @@ import LoginPage from './view/loginPage/loginPage'
 import HomePage from './view/homePage/home/home'
 import Application from './view/application/application'
 import Content from './view/application/layout/page/content'
-import Register from './view/application/layout/page/register'
-import UserList from './view/application/layout/page/userList'
+import Register from './view/application/layout/page/user/register'
+import UserList from './view/application/layout/page/user/userList'
+import EditUser from './view/application/layout/page/user/editUser'
+
 //Notify
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +38,7 @@ function App() {
         }
         dispatch(login(payload))
       }).catch( err => {
-        console.log(err)
+        console.log(err.response.data.msg)
       });
     }
   },[dispatch]);
@@ -51,6 +53,7 @@ function App() {
                   <Route  path="" element={<Content />} />
                   <Route  path="user/" element={<UserList />} /> 
                   <Route  path="user/register/" element={<Register />} />  
+                  <Route  path="user/editUser/:userID" element={<EditUser />} />  
                 </Route>
               </Route>
             </Routes>

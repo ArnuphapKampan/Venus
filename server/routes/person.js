@@ -1,38 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const { create,list,read,update,remove,approv } = require('../controllers/person')
+const { list,read,remove,approv,changePassword } = require('../controllers/person')
 
 //middleware
 const { auth } = require('../middleware/auth');
 
-// @route POST localhost:8888/api/register
-// @desc  Route create
-// @access Public
-// router.post('/person',auth,create);
-
 // @route POST localhost:8888/api/user-list
 // @desc  Route list
-// @access Public
+// @access Private
 router.post('/user-list',auth,list);
 
 // @route POST localhost:8888/api/user-approv
 // @desc  Route approv
-// @access Public
+// @access Private
 router.post('/user-approv',auth,approv);
+
+// @route POST localhost:8888/api/change-user-password
+// @desc  Route change password
+// @access Private
+router.post('/change-user-password',auth,changePassword);
 
 // @route POST localhost:8888/api/register
 // @desc  Route read
-// @access Public
-// router.get('/person/:id',auth,read);
+// @access Private
+router.get('/person/:id',auth,read);
 
-// @route POST localhost:8888/api/register
-// @desc  Route update
-// @access Public
-// router.put('/person/:id',auth,update);
-
-// @route POST localhost:8888/api/register
+// @route POST localhost:8888/api/user-remove
 // @desc  Route remove
-// @access Public
+// @access Private
 router.delete('/user-remove/:id',auth,remove);
 
 module.exports = router;
