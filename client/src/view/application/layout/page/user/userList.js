@@ -84,9 +84,9 @@ const UserList = () => {
     const onClickHandlerRemove = (info) => {
       if(info.public_id){
         toast.warning("Removing Image at Cloudinary . . .")
-        const public_id = info.public_id;
+        const publicID = info.public_id;
         axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
-        { public_id },
+        { publicID },
         {
             headers:{ authtoken }
         }
@@ -169,14 +169,9 @@ const UserList = () => {
     <main>
         <div className="container-fluid">
             <h1 className="mt-4">User List</h1>
-              <table align="right">
-                <th></th>
-                <th>
-                <NavLink className="nav-link" align="right" to="register/" >
-                    <button type="button" className="btn btn-success" name="btn-register" >Add User</button>
-                </NavLink>
-                </th>
-              </table>
+            <div align="right">
+                <button type="button" className="btn btn-success" name="btn-register" ><NavLink className="nav-link" align="right" to="register/" >Add User</NavLink></button>
+            </div>
               <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={infoUserList} />
         </div>
     </main>

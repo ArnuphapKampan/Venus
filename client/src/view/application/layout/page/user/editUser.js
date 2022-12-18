@@ -8,7 +8,7 @@ import { Section,Prop,Article } from "../../generic";
 import ReactLoading from 'react-loading';
 import { Radio } from 'antd';
 //Functions
-import { registerHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
+import { updateHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
 //active menu
 import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
@@ -32,7 +32,9 @@ const EditUser = () => {
             username: res.data[0].username,
             role: res.data[0].role
           })
-          setProfileOld(res.data[0].profile)
+          setImageURL(res.data[0].profile)
+          setProfileOld(res.data[0].image)
+          setPublicID(res.data[0].public_id)
         }).catch(err => {
           console.log(err.response.data.msg)
         })
@@ -43,7 +45,9 @@ const EditUser = () => {
 
   const navigate = useNavigate();
   const [profile,setProfile] = useState();
-  const [profileOld,setProfileOld] = useState();
+  const [publicID,setPublicID] = useState();
+  const [profileOld,setProfileOld] = useState('');
+  const [imageURL,setImageURL] = useState();
   const [loading,setLoading] = useState(false);
   const [uploading,setUploading] = useState('');
   const roles = [
@@ -70,6 +74,18 @@ const EditUser = () => {
         if(profile){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
+        if(publicID){
+          axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
+          { publicID },
+          {
+              headers:{ authtoken }
+          }
+          ).then(res => {
+              toast.success("Removed Image at Cloudinary Successful")
+          }).catch(err => {
+            console.log(err)
+          });
+        }
         Resizer.imageFileResizer(
               profile[0],
                 720,
@@ -86,23 +102,39 @@ const EditUser = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        insertUser(res);
+                        toast.success('Uploaded new profile Successful');
+                        updateUser(res);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
                 },
                 "base64"
             )
+        }else if(publicID && profileOld === 'delete'){
+          setLoading(true);
+          setUploading('Uploading To Cloudinary . . .');
+          axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
+          { publicID },
+          {
+              headers:{ authtoken }
+          }
+          ).then(res => {
+            toast.success("Removed Image at Cloudinary Successful")
+            updateUser(res);
+          }).catch(err => {
+            console.log(err)
+          });
         }else{
           setLoading(true);
-          insertUser();
+          updateUser();
         }
   }
 
-  const insertUser = (res) => {
+  const updateUser = (res) => {
       setUploading('Uploading Info To Database . . .');
-      const image = (res)?JSON.stringify(res.data):'';
+      const image = (res)?JSON.stringify(res.data):profileOld;
       const newUser = {
+        id:userID,
         name,
         surname,
         username,
@@ -110,10 +142,10 @@ const EditUser = () => {
         role
       }
 
-      registerHandler(newUser).then(res =>{
+      updateHandler(newUser, authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success(res.data);
+        toast.success('Updated user information successful');
         navigate("/application/user/");
         }, 1500); 
       }).catch(err => {
@@ -138,7 +170,7 @@ const EditUser = () => {
               <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" value={username} required onChange={ e => onChange(e) } />
               <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
               <ModalChangePassword userID = {userID} authtoken = { authtoken } />
-              <FileUpload setProfile = { setProfile } profileOld = {profileOld} setProfileOld = { setProfileOld } />
+              <FileUpload setProfile = { setProfile } imageURL = { imageURL } setImageURL = { setImageURL } setProfileOld = { setProfileOld } />
               { (loading)?(
               <Section>
                   <Article>

@@ -9,7 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
 
-const FileUpload = ({ setProfile, profileOld, setProfileOld }) => {
+const FileUpload = ({ setProfile, imageURL, setImageURL, setProfileOld }) => {
    
     const [loaddingProfile,setLoaddingProfile] = useState(false);
     const [preImage, setPreImage] = useState();
@@ -17,6 +17,7 @@ const FileUpload = ({ setProfile, profileOld, setProfileOld }) => {
     const preView = (e) => {
         setLoaddingProfile(true)
         setProfile(e.target.files);
+        setProfileOld();
         setTimeout(function(){
             setPreImage(URL.createObjectURL(e.target.files[0]))
             setLoaddingProfile(false)
@@ -29,7 +30,8 @@ const FileUpload = ({ setProfile, profileOld, setProfileOld }) => {
         document.getElementById("icon-button-file").value = "";
         setPreImage();
         setProfile();
-        setProfileOld();
+        setImageURL();
+        setProfileOld('delete');
     }
 
   return (
@@ -48,11 +50,11 @@ const FileUpload = ({ setProfile, profileOld, setProfileOld }) => {
             </IconButton>
         </label>
     </div>
-    { (preImage || profileOld)?(
+    { (preImage || imageURL)?(
     <div className="form-group text-center">
     <span className="avatar-item">
         <Badge count="X" title="remove" onClick={ preViewRemove  } style={{cursor:"pointer"}}>
-            <Avatar src={preImage || profileOld} shape="square" size={250} icon={<UserOutlined />} />
+            <Avatar src={preImage || imageURL} shape="square" size={250} icon={<UserOutlined />} />
         </Badge>
     </span>
     </div>

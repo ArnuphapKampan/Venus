@@ -35,3 +35,9 @@ export const handlerPassword = async (info,authtoken) => {
         headers:{ authtoken }
     });
 }
+
+export const updateHandler = async (user, authtoken) => {
+    return await axios.post(process.env.REACT_APP_API+'/user-update',user,{
+        headers:{ authtoken }
+    });
+}

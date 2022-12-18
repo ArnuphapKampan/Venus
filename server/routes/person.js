@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { list,read,remove,approv,changePassword } = require('../controllers/person')
+const { list,read,remove,approv,changePassword,userUpdate } = require('../controllers/person')
 
 //middleware
 const { auth } = require('../middleware/auth');
@@ -19,6 +19,11 @@ router.post('/user-approv',auth,approv);
 // @desc  Route change password
 // @access Private
 router.post('/change-user-password',auth,changePassword);
+
+// @route POST localhost:8888/api/user-update
+// @desc  Route user update
+// @access Private
+router.post('/user-update',auth,userUpdate);
 
 // @route POST localhost:8888/api/register
 // @desc  Route read

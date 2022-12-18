@@ -3,6 +3,8 @@ const { userApprovs } = require('./query/userApprovs')
 const { userRemoves } = require('./query/userRemoves')
 const { userInfo } = require('./query/userInfo')
 const { userChangePassword } = require('./query/userChangePassword')
+const { checkUsernameUpdate } = require('./query/checkUsernameUpdate')
+const { updateUserInfo } = require('./query/updateUserInfo')
 const bcrypt = require('bcryptjs');
 
 exports.list = async (req, res) => {
@@ -56,6 +58,31 @@ exports.remove = async (req, res) => {
     try{
         const userRemove = await userRemoves(req.params.id);
         res.json(userRemove);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.userUpdate = async (req, res) => {
+    const { id,name,surname,username,image,role } = req.body;
+    try{
+        //check username
+        const user = await checkUsernameUpdate(id,username);
+        if(user.length > 0){
+            return res.status(400).json({ msg: 'User already exists.' })
+        }
+
+        let info = {
+            id:id,
+            name:name,
+            surname:surname,
+            username:username,
+            image:image,
+            role:role
+        };
+
+        const message = await updateUserInfo(info);
+        res.send(message);
     }catch(err){
         res.status(500).send(err)
     }

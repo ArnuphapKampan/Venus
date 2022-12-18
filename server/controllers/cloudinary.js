@@ -22,7 +22,7 @@ exports.cloudinaryImage = async (req, res) => {
 
 exports.cloudinaryRemove = async (req, res) => {
     try{
-        let image_id = req.body.public_id;
+        let image_id = req.body.publicID;
         await cloudinary.uploader.destroy(image_id,(result) => {
             res.send(result);
         })
