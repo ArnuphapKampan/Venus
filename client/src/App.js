@@ -8,6 +8,8 @@ import Content from './view/application/layout/page/content'
 import Register from './view/application/layout/page/user/register'
 import UserList from './view/application/layout/page/user/userList'
 import EditUser from './view/application/layout/page/user/editUser'
+import Profile from './view/application/layout/page/profile/profile'
+import Message from './view/application/layout/page/message/message'
 
 //Notify
 import { ToastContainer } from 'react-toastify';
@@ -54,6 +56,8 @@ function App() {
                   <Route  path="user/" element={<UserList />} /> 
                   <Route  path="user/register/" element={<Register />} />  
                   <Route  path="user/editUser/:userID" element={<EditUser />} />  
+                  <Route  path="profile/:userID" element={<Profile />} />  
+                  <Route  path="message/" element={<Message />} />  
                 </Route>
               </Route>
             </Routes>

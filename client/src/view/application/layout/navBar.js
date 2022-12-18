@@ -46,7 +46,7 @@ const NavBar = () => {
             <img src={ image} width="40" height="40" className="rounded-circle" alt="" />
             </Link>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <Link className="dropdown-item" to="#">Settings</Link>
+                    <Link className="dropdown-item" to={`profile/${user.id}`}>Profile</Link>
                     <Link className="dropdown-item" to="#">Activity Log</Link>
                     <div className="dropdown-divider"></div>
                     <Link className="dropdown-item" to="/" onClick={ handleLogout }>Logout</Link>

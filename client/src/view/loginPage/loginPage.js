@@ -67,6 +67,8 @@ function LoginPage() {
                   className="form-control"
                   placeholder="Enter username"
                   autoFocus
+                  autoComplete="off"
+                  required
                   onChange={ e => onChange(e) }
                 />
               </div>
@@ -77,6 +79,8 @@ function LoginPage() {
                   name="password"
                   className="form-control"
                   placeholder="Enter password"
+                  autoComplete="off"
+                  required
                   onChange={ e => onChange(e) }
                 />
               </div>
