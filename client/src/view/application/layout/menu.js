@@ -22,6 +22,11 @@ const Menu = () => {
                         <div className="sb-nav-link-icon"></div>
                         Message<sup><i className="fa fa-bell text-danger"></i><sup><span className="badge rounded-pill badge-notification bg-danger">10</span></sup></sup>
                     </NavLink>
+                    <NavLink style={{borderRight: (userStorage.activeMenu === "map")?'5px solid skyblue':'',color: (userStorage.activeMenu === "map")?'#007bff':'#6c757d'}} className="nav-link" to={"map/"}>
+                    <i className="fas fa-map-marked-alt"></i>
+                        <div className="sb-nav-link-icon"></div>
+                        Map
+                    </NavLink>
                     {/* <div className="sb-sidenav-menu-heading">Interface</div> */}
                     
                     <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" style={{color:'#6c757d'}}>

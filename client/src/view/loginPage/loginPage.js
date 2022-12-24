@@ -30,7 +30,9 @@ function LoginPage() {
       const data = {
             token:res.data.token,
             username:res.data.payload.user.username,
-            role:res.data.payload.user.role
+            role:res.data.payload.user.role,
+            image:res.data.payload.user.image,
+            
       }
       dispatch(login(data))
 
@@ -46,10 +48,10 @@ function LoginPage() {
   const roleBasedRedirect = (res) => {
     if(res === 'admin'){
       navigate("/application/");
-      window.location.reload(); 
+      // window.location.reload(); 
     }else{
       navigate("/application/");
-      window.location.reload(); 
+      // window.location.reload(); 
     }
   }
   return (
