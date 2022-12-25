@@ -36,7 +36,7 @@ const FileUpload = ({ setProfile, imageURL, setImageURL, setProfileOld }) => {
 
   return (
     <>
-    <div className="form-group">
+    <div className="shadow-none form-group">
         <input 
         accept="image/*"
         id="icon-button-file"
@@ -51,8 +51,8 @@ const FileUpload = ({ setProfile, imageURL, setImageURL, setProfileOld }) => {
         </label>
     </div>
     { (preImage || imageURL)?(
-    <div className="form-group text-center">
-    <span className="avatar-item">
+    <div className="shadow-none form-group text-center">
+    <span className="shadow-none avatar-item">
         <Badge count="X" title="remove" onClick={ preViewRemove  } style={{cursor:"pointer"}}>
             <Avatar src={preImage || imageURL} shape="square" size={250} icon={<UserOutlined />} />
         </Badge>

@@ -42,15 +42,15 @@ const ModalChangePassword = ({ userID, authtoken }) => {
   };
   return (
     <>
-    <div className="form-group">
-      <Button variant="primary" onClick={handleShow}>
+    <div className="shadow-none form-group">
+      <Button className="shadow-none" variant="primary" onClick={handleShow}>
         Change Password
       </Button>
     </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="shadow-none mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>New Password</Form.Label>
               <Form.Control
                 type="password"
@@ -62,7 +62,7 @@ const ModalChangePassword = ({ userID, authtoken }) => {
                 onChange={ e => onChange(e) }
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+            <Form.Group className="shadow-none mb-3" controlId="exampleForm.ControlInput2">
               <Form.Label>Confirm New Password</Form.Label>
               <Form.Control
                 type="password"
@@ -76,10 +76,10 @@ const ModalChangePassword = ({ userID, authtoken }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={e => handleClose(e)}>
+          <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
             Close
           </Button>
-          <Button variant="primary" onClick={ e => handleChangePassword(e) }>
+          <Button className="shadow-none" variant="primary" onClick={ e => handleChangePassword(e) }>
             Confirm
           </Button>
         </Modal.Footer>

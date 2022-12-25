@@ -115,16 +115,16 @@ const Location = () => {
 
   return (
     <main>
-        <div className="container-fluid">
-            <div className="container">
-            <h1 className="mt-4">Add Location</h1>
-            <div className="col-md-6 offset-md-3">
+        <div className="shadow-none container-fluid">
+            <div className="shadow-none container">
+            <h1 className="shadow-none mt-4">Add Location</h1>
+            <div className="shadow-none col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
-              <input className="form-control mb-3" type="text" name="title" autoFocus placeholder="Title" autoComplete="off" required onChange={ e => onChange(e) } />
-              <textarea style={{ minHeight: 100 }} className="form-control mb-3" type="text" name="detail" placeholder="Detail" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="latitude" placeholder="Latitude" autoComplete="off" value={getLat} required onChange={ e => setGetLat(e.target.value) } />
-              <input className="form-control mb-3" type="text" name="longitude" placeholder="Longitude" autoComplete="off" value={getLon} required onChange={ e => setGetlon(e.target.value) } />
-              <div className="btn-group">
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="title" autoFocus placeholder="Title" autoComplete="off" required onChange={ e => onChange(e) } />
+              <textarea style={{ minHeight: 100 }} className="shadow-none form-control shadow-none mb-3" type="text" name="detail" placeholder="Detail" autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="latitude" placeholder="Latitude" autoComplete="off" value={getLat} required onChange={ e => setGetLat(e.target.value) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="longitude" placeholder="Longitude" autoComplete="off" value={getLon} required onChange={ e => setGetlon(e.target.value) } />
+              <div className="shadow-none btn-group">
               <ModalSettingIcon iconLocation = {iconLocation} setIconLocation = {setIconLocation}  classLocation = {classLocation} setClassLocation = {setClassLocation}  colorLocation = {colorLocation} setColorLocation = {setColorLocation}  sizeLocation = {sizeLocation} setSizeLocation = {setSizeLocation} />
               <ModalGetLocation setGetLat = {setGetLat} setGetlon={setGetlon} getLat={getLat} getLon={getLon} />
               </div>
@@ -137,7 +137,7 @@ const Location = () => {
                       <Prop>{uploading}</Prop>
                   </Article>
               </Section>):
-              (<button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
+              (<button className="shadow-none form-control shadow-none mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
             </form>
             </div>
             </div>

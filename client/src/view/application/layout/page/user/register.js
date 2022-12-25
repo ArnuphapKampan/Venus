@@ -117,17 +117,17 @@ const Register = () => {
 
   return (
     <main>
-        <div className="container-fluid">
-            <div className="container">
-            <h1 className="mt-4">Add User</h1>
-            <div className="col-md-6 offset-md-3">
+        <div className="shadow-none container-fluid">
+            <div className="shadow-none container">
+            <h1 className="shadow-none mt-4">Add User</h1>
+            <div className="shadow-none col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
-              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password" placeholder="password" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" autoComplete="off" required onChange={ e => onChange(e) } />
-              <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="username" placeholder="username" autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="password" name="password" placeholder="password" autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="password" name="password2" placeholder="confirm password" autoComplete="off" required onChange={ e => onChange(e) } />
+              <Radio.Group className="shadow-none mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
               <FileUpload setProfile = { setProfile } />
               { (loading)?(
               <Section>
@@ -137,7 +137,7 @@ const Register = () => {
                       <Prop>{uploading}</Prop>
                   </Article>
               </Section>):
-              (<button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
+              (<button className="shadow-none form-control shadow-none mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
             </form>
             </div>
             </div>

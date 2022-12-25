@@ -161,16 +161,16 @@ const UserList = () => {
         {
           key: 'id',
           align: 'center',
-          render: (info) => <div className="d-flex justify-content-center">  <NavLink className="nav-link" align="right" to={`editUser/${info.key}`} ><EditOutlined className="btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="btn text-sm text-danger" /> </div>
+          render: (info) => <div className="shadow-none d-flex justify-content-center">  <NavLink className="shadow-none nav-link" align="right" to={`editUser/${info.key}`} ><EditOutlined className="shadow-none btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="shadow-none btn text-sm text-danger" /> </div>
         }
       ];
       
   return (
     <main>
-        <div className="container-fluid">
-            <h1 className="mt-4">User List</h1>
+        <div className="shadow-none container-fluid">
+            <h1 className="shadow-none mt-4">User List</h1>
             <div align="right">
-                <button type="button" className="btn btn-success" name="btn-register" ><NavLink className="nav-link" align="right" to="register/" >Add User</NavLink></button>
+              <NavLink className="shadow-none nav-link" align="right" to="register/" ><button type="button" className="shadow-none btn btn-success" name="btn-register" >Add User</button></NavLink>
             </div>
               <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={infoUserList} />
         </div>

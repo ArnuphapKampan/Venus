@@ -39,8 +39,8 @@ const ModalGetLocation = ({setGetLat, setGetlon, getLat, getLon}) => {
 
   return (
     <>
-    <div className="form-group">
-      <Button variant="warning" onClick={handleShow}>
+    <div className="shadow-none form-group">
+      <Button className="shadow-none" variant="warning" onClick={handleShow}>
         Get Location
       </Button>
     </div>
@@ -58,10 +58,10 @@ const ModalGetLocation = ({setGetLat, setGetlon, getLat, getLon}) => {
             </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={e => handleClose(e)}>
+          <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
             Close
           </Button>
-          <Button variant="primary" onClick={ e => handleLocation(e) }>
+          <Button className="shadow-none" variant="primary" onClick={ e => handleLocation(e) }>
             Confirm
           </Button>
         </Modal.Footer>

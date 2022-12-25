@@ -158,18 +158,18 @@ const EditUser = () => {
 
   return (
     <main>
-        <div className="container-fluid">
-            <div className="container">
-            <h1 className="mt-4">Edit User</h1>
-            <div className="col-md-6 offset-md-3">
+        <div className="shadow-none container-fluid">
+            <div className="shadow-none container">
+            <h1 className="shadow-none mt-4">Edit User</h1>
+            <div className="shadow-none col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
               Name:
-              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" value={name} required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" value={name} required onChange={ e => onChange(e) } />
               Surname:
-              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" value={surname} required onChange={ e => onChange(e) } />
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" value={surname} required onChange={ e => onChange(e) } />
               Username:
-              <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" value={username} required onChange={ e => onChange(e) } />
-              <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
+              <input className="shadow-none form-control shadow-none mb-3" type="text" name="username" placeholder="username" autoComplete="off" value={username} required onChange={ e => onChange(e) } />
+              <Radio.Group className="shadow-none mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
               <ModalChangePassword userID = {userID} authtoken = { authtoken } />
               <FileUpload setProfile = { setProfile } imageURL = { imageURL } setImageURL = { setImageURL } setProfileOld = { setProfileOld } />
               { (loading)?(
@@ -180,7 +180,7 @@ const EditUser = () => {
                       <Prop>{uploading}</Prop>
                   </Article>
               </Section>):
-              (<button className="form-control mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
+              (<button className="shadow-none form-control shadow-none mb-3 btn btn-success" type="submit" name="submit">SAVE</button>)}
             </form>
             </div>
             </div>

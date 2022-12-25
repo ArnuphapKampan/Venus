@@ -50,7 +50,7 @@ const Map = () => {
                                 ${locationList[i].location_detail}</br>
                                 พิกัด: ${locationList[i].latitude} , ${locationList[i].longitude}</br>
                                 </br>
-                                <a target="_blank" href="https://www.google.co.th/maps/dir/${position.coords.latitude},${position.coords.longitude}/${locationList[i].latitude},${locationList[i].longitude}/@${locationList[i].latitude},${locationList[i].longitude},20z/" ><button style="font-size:10px;" class="btn btn-outline-info ">Let's Go <i class="fas fa-plane-departure"></i></button></a>
+                                <a class="shadow-none" target="_blank" href="https://www.google.co.th/maps/dir/${position.coords.latitude},${position.coords.longitude}/${locationList[i].latitude},${locationList[i].longitude}/@${locationList[i].latitude},${locationList[i].longitude},20z/" ><button style="font-size:10px;" class="btn btn-outline-info shadow-none">Let's Go <i class="fas fa-plane-departure"></i></button></a>
                                 </br>
                                 </br>
                                 ${(locationList[i].image !== null)?`<img style="width: 100%; height: 100%; object-fit: scale-down;" src="${locationList[i].image}" alt="Girl in a jacket">`:''}`,
@@ -76,7 +76,7 @@ const Map = () => {
 
     
     return (
-      <div className="h-100 d-inline-block">
+      <div className="shadow-none h-100 d-inline-block">
         <LongdoMap id="longdo-map" mapKey={mapKey} callback={initMap} />
       </div>
     );
