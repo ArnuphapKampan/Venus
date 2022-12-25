@@ -4,13 +4,16 @@ import { Routes, Route } from 'react-router-dom'
 import LoginPage from './view/loginPage/loginPage'
 import HomePage from './view/homePage/home/home'
 import Application from './view/application/application'
-import Content from './view/application/layout/page/content'
+import Content from './view/application/layout/page/content/content'
 import Register from './view/application/layout/page/user/register'
 import UserList from './view/application/layout/page/user/userList'
 import EditUser from './view/application/layout/page/user/editUser'
 import Profile from './view/application/layout/page/profile/profile'
 import Message from './view/application/layout/page/message/message'
 import Map from './view/application/layout/page/map/map'
+import Location from './view/application/layout/page/mapManage/location'
+import EditLocation from './view/application/layout/page/mapManage/editLocation'
+import LocationList from './view/application/layout/page/mapManage/locationList'
 
 //Notify
 import { ToastContainer } from 'react-toastify';
@@ -60,6 +63,9 @@ function App() {
                   <Route  path="profile/:userID" element={<Profile />} />  
                   <Route  path="message/" element={<Message />} />  
                   <Route  path="map/" element={<Map />} />  
+                  <Route  path="mapManage/" element={<LocationList />} />
+                  <Route  path="mapManage/location/" element={<Location />} /> 
+                  <Route  path="mapManage/editLocation/:locationID" element={<EditLocation />} /> 
                 </Route>
               </Route>
             </Routes>

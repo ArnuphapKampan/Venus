@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const registerHandler = async (user) => {
+export const registerHandler = async (user,authtoken) => {
     return await axios.post(process.env.REACT_APP_API+'/register',user,{
-        headers:{'Content-Type':'application/json'}
+        headers:{ authtoken }
     });
 }
 

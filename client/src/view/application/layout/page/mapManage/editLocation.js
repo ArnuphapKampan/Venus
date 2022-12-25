@@ -1,31 +1,53 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
-import FileUpload from '../../fileUploadRegister';
+import FileUpload from '../../fileUpload';
+import ModalChangePassword from './modal';
+
 import { Section,Prop,Article } from "../../generic";
 import ReactLoading from 'react-loading';
 import { Radio } from 'antd';
 //Functions
-import { registerHandler } from '../../../../../function/auth'
+import { updateHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
 //active menu
 import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
-const Register = () => {
-
+const EditUser = () => {
+  const params = useParams();
+  const userID = params.userID;
   const authtoken = localStorage.getItem('token')
 
    //active menu
    const dispatch = useDispatch();
-   const activePath = "user";
+   const activePath = "mapManage";
    useEffect(() => {
-       dispatch(activeMenu(activePath));
+        dispatch(activeMenu(activePath));
+      
+        handlerGetInfoEditUser(userID,authtoken).then((res) => {
+          setFormData({
+            name: res.data[0].name,
+            surname: res.data[0].surname,
+            username: res.data[0].username,
+            role: res.data[0].role
+          })
+          setImageURL(res.data[0].profile)
+          setProfileOld(res.data[0].image)
+          setPublicID(res.data[0].public_id)
+        }).catch(err => {
+          console.log(err.response.data.msg)
+        })
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    },[dispatch])
    //active menu
 
   const navigate = useNavigate();
   const [profile,setProfile] = useState();
+  const [publicID,setPublicID] = useState();
+  const [profileOld,setProfileOld] = useState('');
+  const [imageURL,setImageURL] = useState();
   const [loading,setLoading] = useState(false);
   const [uploading,setUploading] = useState('');
   const roles = [
@@ -36,12 +58,10 @@ const Register = () => {
       name: '',
       surname: '',
       username: '',
-      password: '',
-      password2: '',
       role: ''
   });
 
-  const { name, surname, username, password, password2, role } = formData;
+  const { name, surname, username, role } = formData;
   const onChange = (e) =>{
     setFormData({ ...formData,[e.target.name]:e.target.value });
   }
@@ -51,14 +71,21 @@ const Register = () => {
 
   const onSubmit = (e) =>{
     e.preventDefault();
-    if(password !== password2){
-      toast.warning('Password is not match.')
-    }else if(role === ""){
-      toast.warning('Please choose role.')
-    }else{
         if(profile){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
+        if(publicID){
+          axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
+          { publicID },
+          {
+              headers:{ authtoken }
+          }
+          ).then(res => {
+              toast.success("Removed Image at Cloudinary Successful")
+          }).catch(err => {
+            console.log(err)
+          });
+        }
         Resizer.imageFileResizer(
               profile[0],
                 720,
@@ -75,37 +102,50 @@ const Register = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        insertUser(res);
+                        toast.success('Uploaded new profile Successful');
+                        updateUser(res);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
                 },
                 "base64"
             )
+        }else if(publicID && profileOld === 'delete'){
+          setLoading(true);
+          setUploading('Uploading To Cloudinary . . .');
+          axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
+          { publicID },
+          {
+              headers:{ authtoken }
+          }
+          ).then(res => {
+            toast.success("Removed Image at Cloudinary Successful")
+            updateUser(res);
+          }).catch(err => {
+            console.log(err)
+          });
         }else{
           setLoading(true);
-          insertUser();
+          updateUser();
         }
-
-    }
   }
 
-  const insertUser = (res) => {
+  const updateUser = (res) => {
       setUploading('Uploading Info To Database . . .');
-      const image = (res)?JSON.stringify(res.data):'';
+      const image = (res)?JSON.stringify(res.data):profileOld;
       const newUser = {
+        id:userID,
         name,
         surname,
         username,
         image: image,
-        password,
         role
       }
 
-      registerHandler(newUser,authtoken).then(res =>{
+      updateHandler(newUser, authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success(res.data);
+        toast.success('Updated user information successful');
         navigate("/application/user/");
         }, 1500); 
       }).catch(err => {
@@ -119,16 +159,18 @@ const Register = () => {
     <main>
         <div className="container-fluid">
             <div className="container">
-            <h1 className="mt-4">Add User</h1>
+            <h1 className="mt-4">Edit User</h1>
             <div className="col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
-              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password" placeholder="password" autoComplete="off" required onChange={ e => onChange(e) } />
-              <input className="form-control mb-3" type="password" name="password2" placeholder="confirm password" autoComplete="off" required onChange={ e => onChange(e) } />
+              Name:
+              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" value={name} required onChange={ e => onChange(e) } />
+              Surname:
+              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" value={surname} required onChange={ e => onChange(e) } />
+              Username:
+              <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" value={username} required onChange={ e => onChange(e) } />
               <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
-              <FileUpload setProfile = { setProfile } />
+              <ModalChangePassword userID = {userID} authtoken = { authtoken } />
+              <FileUpload setProfile = { setProfile } imageURL = { imageURL } setImageURL = { setImageURL } setProfileOld = { setProfileOld } />
               { (loading)?(
               <Section>
                   <Article>
@@ -146,4 +188,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default EditUser

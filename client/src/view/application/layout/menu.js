@@ -41,7 +41,11 @@ const Menu = () => {
                             ?(<NavLink style={{borderRight: (userStorage.activeMenu === "user")?'5px solid skyblue':'',color: (userStorage.activeMenu === "user")?'#007bff':'#6c757d'}} className="nav-link" to={'user/'}><i className="fas fa-users"></i><div className="sb-nav-link-icon"></div>User Management</NavLink>)
                             :""
                           }
-                            <NavLink style={{color:'#6c757d'}} className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                          {(decoded.user.role === "admin")
+                            ?(<NavLink style={{borderRight: (userStorage.activeMenu === "mapManage")?'5px solid skyblue':'',color: (userStorage.activeMenu === "mapManage")?'#007bff':'#6c757d'}} className="nav-link" to={'mapManage/'}><i className="fas fa-map-marker-alt"></i><div className="sb-nav-link-icon"></div>Map Management</NavLink>)
+                            :""
+                          }
+                            {/* <NavLink style={{color:'#6c757d'}} className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                 Authentication
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                             </NavLink>
@@ -62,7 +66,7 @@ const Menu = () => {
                                     <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to="/404">404 Page</NavLink>
                                     <NavLink style={({isActive})=>{return {borderRight: isActive?'5px solid skyblue':''}}} className="nav-link" to="/500">500 Page</NavLink>
                                 </nav>
-                            </div>
+                            </div> */}
                         </nav>
                     </div>
                     

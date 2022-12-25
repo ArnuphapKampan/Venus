@@ -80,7 +80,7 @@ const ModalChangePassword = ({ userID, authtoken }) => {
             Close
           </Button>
           <Button variant="primary" onClick={ e => handleChangePassword(e) }>
-            confirm
+            Confirm
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 //active menu
-import { activeMenu } from '../../../../reducer/userReducer';
+import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 const Content = () => {
 
