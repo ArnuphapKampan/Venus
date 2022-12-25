@@ -41,7 +41,7 @@ const Map = () => {
                       {
                         title: `${locationList[i].location_title}`,
                         icon: {
-                          html: `<h1><i class="${markerIcon.icon} ${markerIcon.class}" style="color:${markerIcon.color} !impotent; font-size:${markerIcon.size}px;"></i></h1>`,
+                          html: `<h1><i class="${markerIcon.icon} ${markerIcon.class}" style="color:${markerIcon.color}; font-size:${markerIcon.size}px;"></i></h1>`,
                           offset: { x: 12, y: 45 }
                         },
                         visibleRange: { min: 6, max: 100 },

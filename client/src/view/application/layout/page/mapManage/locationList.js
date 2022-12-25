@@ -15,7 +15,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { handlerRemove } from '../../../../../function/auth'
 //query info
 import { locationList } from '../../../../../query/location/locationList';
-const UserList = () => {
+const LocationList = () => {
 
     const [infoUserList,setInfoUserList] = useState([])
     const authtoken = localStorage.getItem('token')
@@ -124,7 +124,7 @@ const UserList = () => {
       {
         title: 'Marker', 
         dataIndex: 'marker',
-        render: (info) => <h1><i className={`${info.icon} ${info.class}`}></i></h1>
+        render: (info) => <h1><i className={`${info.icon} ${info.class}`} style={{color:info.color}}></i></h1>
       },
       {
         title: 'Title',
@@ -161,7 +161,7 @@ const UserList = () => {
       {
         key: 'id',
         align: 'center',
-        render: (info) => <div className="d-flex justify-content-center">  <NavLink className="nav-link" align="right" to={`editUser/${info.key}`} ><EditOutlined className="btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="btn text-sm text-danger" /> </div>
+        render: (info) => <div className="d-flex justify-content-center">  <NavLink className="nav-link" align="right" to={`editlocation/${info.key}`} ><EditOutlined className="btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="btn text-sm text-danger" /> </div>
       }
     ];
       
@@ -178,4 +178,4 @@ const UserList = () => {
   )
 }
 
-export default UserList
+export default LocationList

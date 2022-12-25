@@ -1,77 +1,81 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
-import FileUpload from '../../fileUpload';
-import ModalChangePassword from './modal';
-
+import FileUploadLocationEdit from '../../fileUploadLocationEdit';
 import { Section,Prop,Article } from "../../generic";
 import ReactLoading from 'react-loading';
-import { Radio } from 'antd';
 //Functions
-import { updateHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
+import { updateLocationHandler, handlerGetInfoEditLocation } from '../../../../../function/location'
+import ModalSettingIcon from './modalEdit';
+import ModalGetLocation from './modalGetLocationEdit';
 //active menu
 import { activeMenu } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
-const EditUser = () => {
+const EditLocation = () => {
   const params = useParams();
-  const userID = params.userID;
+  const locationID = params.locationID;
   const authtoken = localStorage.getItem('token')
 
    //active menu
    const dispatch = useDispatch();
    const activePath = "mapManage";
    useEffect(() => {
-        dispatch(activeMenu(activePath));
-      
-        handlerGetInfoEditUser(userID,authtoken).then((res) => {
-          setFormData({
-            name: res.data[0].name,
-            surname: res.data[0].surname,
-            username: res.data[0].username,
-            role: res.data[0].role
-          })
-          setImageURL(res.data[0].profile)
-          setProfileOld(res.data[0].image)
-          setPublicID(res.data[0].public_id)
-        }).catch(err => {
-          console.log(err.response.data.msg)
+       dispatch(activeMenu(activePath));
+       handlerGetInfoEditLocation(locationID,authtoken).then((res) => {
+        setFormData({
+          title: res.data[0].location_title,
+          detail: res.data[0].location_detail
         })
-
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+        setImageURL(res.data[0].image)
+        setLocationImageOld(res.data[0].location_image)
+        setPublicID(res.data[0].public_id)
+        //setting marker
+        let setting = JSON.parse(res.data[0].setting_marker);
+        setIconLocation(setting.icon);
+        setClassLocation(setting.class);
+        setColorLocation(setting.color);
+        setSizeLocation(setting.size);
+        //get lat and long coordinates
+        setGetLat(res.data[0].latitude);
+        setGetlon(res.data[0].longitude);
+      }).catch(err => {
+        console.log(err.response.data.msg)
+      })
+     // eslint-disable-next-line react-hooks/exhaustive-deps
    },[dispatch])
    //active menu
 
-  const navigate = useNavigate();
-  const [profile,setProfile] = useState();
-  const [publicID,setPublicID] = useState();
-  const [profileOld,setProfileOld] = useState('');
-  const [imageURL,setImageURL] = useState();
-  const [loading,setLoading] = useState(false);
-  const [uploading,setUploading] = useState('');
-  const roles = [
-    { label: 'STAFF', value: 'staff' },
-    { label: 'ADMIN', value: 'admin' },
-  ];
+   //icon setting
+   const [iconLocation,setIconLocation] = useState("fas fa-map-marker-alt");
+   const [classLocation,setClassLocation] = useState("text-danger");
+   const [colorLocation,setColorLocation] = useState("");
+   const [sizeLocation,setSizeLocation] = useState("");
+   const [getLat,setGetLat] = useState("");
+   const [getLon,setGetlon] = useState("");
+
+   const navigate = useNavigate();
+   const [locationImage,setLocationImage] = useState();
+   const [publicID,setPublicID] = useState();
+   const [locationImageOld,setLocationImageOld] = useState('');
+   const [imageURL,setImageURL] = useState();
+   const [loading,setLoading] = useState(false);
+   const [uploading,setUploading] = useState('');
   const [formData,setFormData] = useState({
-      name: '',
-      surname: '',
-      username: '',
-      role: ''
+      title: '',
+      detail: ''
   });
 
-  const { name, surname, username, role } = formData;
+  const { title, detail } = formData;
   const onChange = (e) =>{
     setFormData({ ...formData,[e.target.name]:e.target.value });
   }
-  const onChangeRole = ({ target: { value } }) => {
-    setFormData({ ...formData, role:value });
-  };
+
 
   const onSubmit = (e) =>{
     e.preventDefault();
-        if(profile){
+        if(locationImage){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
         if(publicID){
@@ -87,14 +91,14 @@ const EditUser = () => {
           });
         }
         Resizer.imageFileResizer(
-              profile[0],
+              locationImage[0],
                 720,
                 720,
                 "JPEG",
                 100,
                 0,
                 (uri) => {
-                    axios.post(process.env.REACT_APP_API+'/cloudinary-image',
+                    axios.post(process.env.REACT_APP_API+'/cloudinary-location-image',
                     { 
                         image: uri
                     },
@@ -102,16 +106,17 @@ const EditUser = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        toast.success('Uploaded new profile Successful');
-                        updateUser(res);
+                        toast.success('Uploaded new image Successful');
+                        updateLocation(res);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
                 },
                 "base64"
             )
-        }else if(publicID && profileOld === 'delete'){
+        }else if(publicID && locationImageOld === 'delete'){
           setLoading(true);
+          setLocationImageOld('');
           setUploading('Uploading To Cloudinary . . .');
           axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
           { publicID },
@@ -119,34 +124,36 @@ const EditUser = () => {
               headers:{ authtoken }
           }
           ).then(res => {
+            
             toast.success("Removed Image at Cloudinary Successful")
-            updateUser(res);
+            updateLocation();
           }).catch(err => {
             console.log(err)
           });
         }else{
           setLoading(true);
-          updateUser();
+          updateLocation();
         }
   }
 
-  const updateUser = (res) => {
+  const updateLocation = (res) => {
       setUploading('Uploading Info To Database . . .');
-      const image = (res)?JSON.stringify(res.data):profileOld;
-      const newUser = {
-        id:userID,
-        name,
-        surname,
-        username,
+      const image = (res)?JSON.stringify(res.data):locationImageOld;
+      const info = {
+        id:locationID,
+        title,
+        detail,
+        latitude:getLat,
+        longitude:getLon,
         image: image,
-        role
+        settingMarker: JSON.stringify({"icon":iconLocation,"class":classLocation,"color":colorLocation,"size":sizeLocation})
       }
 
-      updateHandler(newUser, authtoken).then(res =>{
+      updateLocationHandler(info,authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success('Updated user information successful');
-        navigate("/application/user/");
+        toast.success("Updated Location Successful");
+        navigate("/application/mapManage/");
         }, 1500); 
       }).catch(err => {
         setLoading(false);
@@ -159,18 +166,18 @@ const EditUser = () => {
     <main>
         <div className="container-fluid">
             <div className="container">
-            <h1 className="mt-4">Edit User</h1>
+            <h1 className="mt-4">Edit Location</h1>
             <div className="col-md-6 offset-md-3">
             <form onSubmit={ e => onSubmit(e) }>
-              Name:
-              <input className="form-control mb-3" type="text" name="name" autoFocus placeholder="name" autoComplete="off" value={name} required onChange={ e => onChange(e) } />
-              Surname:
-              <input className="form-control mb-3" type="text" name="surname" placeholder="surname" autoComplete="off" value={surname} required onChange={ e => onChange(e) } />
-              Username:
-              <input className="form-control mb-3" type="text" name="username" placeholder="username" autoComplete="off" value={username} required onChange={ e => onChange(e) } />
-              <Radio.Group className="mb-3" options={roles} onChange={ onChangeRole } name="role" value={role} optionType="button"/>
-              <ModalChangePassword userID = {userID} authtoken = { authtoken } />
-              <FileUpload setProfile = { setProfile } imageURL = { imageURL } setImageURL = { setImageURL } setProfileOld = { setProfileOld } />
+              <input className="form-control mb-3" type="text" name="title" autoFocus placeholder="Title" autoComplete="off" value={title} required onChange={ e => onChange(e) } />
+              <textarea style={{ minHeight: 100 }} className="form-control mb-3" type="text" name="detail" placeholder="Detail" value={detail} autoComplete="off" required onChange={ e => onChange(e) } />
+              <input className="form-control mb-3" type="text" name="latitude" placeholder="Latitude" autoComplete="off" value={getLat} required onChange={ e => setGetLat(e.target.value) } />
+              <input className="form-control mb-3" type="text" name="longitude" placeholder="Longitude" autoComplete="off" value={getLon} required onChange={ e => setGetlon(e.target.value) } />
+              <div className="btn-group">
+              <ModalSettingIcon iconLocation = {iconLocation} setIconLocation = {setIconLocation}  classLocation = {classLocation} setClassLocation = {setClassLocation}  colorLocation = {colorLocation} setColorLocation = {setColorLocation}  sizeLocation = {sizeLocation} setSizeLocation = {setSizeLocation} />
+              <ModalGetLocation setGetLat = {setGetLat} setGetlon={setGetlon} getLat={getLat} getLon={getLon} />
+              </div>
+              <FileUploadLocationEdit setLocationImage = { setLocationImage } imageURL = { imageURL } setImageURL = { setImageURL } setLocationImageOld = { setLocationImageOld } />
               { (loading)?(
               <Section>
                   <Article>
@@ -188,4 +195,4 @@ const EditUser = () => {
   )
 }
 
-export default EditUser
+export default EditLocation

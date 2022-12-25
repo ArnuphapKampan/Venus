@@ -112,6 +112,7 @@ const EditUser = () => {
             )
         }else if(publicID && profileOld === 'delete'){
           setLoading(true);
+          setProfileOld('');
           setUploading('Uploading To Cloudinary . . .');
           axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
           { publicID },
@@ -120,7 +121,7 @@ const EditUser = () => {
           }
           ).then(res => {
             toast.success("Removed Image at Cloudinary Successful")
-            updateUser(res);
+            updateUser();
           }).catch(err => {
             console.log(err)
           });

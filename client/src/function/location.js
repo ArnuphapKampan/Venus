@@ -5,3 +5,15 @@ export const addLocationHandler = async (info,authtoken) => {
         headers:{ authtoken }
     });
 }
+
+export const updateLocationHandler = async (info, authtoken) => {
+    return await axios.post(process.env.REACT_APP_API+'/location-update',info,{
+        headers:{ authtoken }
+    });
+}
+
+export const handlerGetInfoEditLocation = async (id,authtoken) => {
+    return await axios.get(process.env.REACT_APP_API+`/location-read/${id}`,{
+        headers:{ authtoken }
+    });
+}
