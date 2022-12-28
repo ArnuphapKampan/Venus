@@ -1,7 +1,35 @@
 import '../../css/footerContent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope,faPhone,faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import ReCAPTCHA from "react-google-recaptcha"
+import { toast } from 'react-toastify';
+import React, { useState, useRef } from 'react';
+
 function Footer(){
+    const token = useRef(null);
+    const [verified,setVerified] = useState(false);
+    const reCAPTCHA = (token) => {
+        if(!token){
+            setVerified(false);
+            toast.warning("Time out verify reCAPTCHA");
+        }else{
+            setVerified(true);
+        }
+    }
+    const sendMessage = () =>{
+        setVerified(false);
+        const idLoading = toast.loading("Sending ...")
+        setTimeout(function(){
+            toast.update(idLoading, {
+                render: 'Your message has been sent.',
+                type: toast.TYPE.SUCCESS,
+                autoClose: 5000,
+                closeButton: true,
+                isLoading: false
+             });
+             token.current.reset();
+        }, 3000);
+    }
     return(
         <div className="footer-content" id="footer">
             <div className="footer-left">
@@ -44,8 +72,16 @@ function Footer(){
                 <div className="footer-right-item">
                     <label>Description:</label><textarea rows={5} cols={5}/><br/>
                  </div>
+                 <div className="footer-right-item mb-2">
+                    <ReCAPTCHA style={{width: '100%'}}
+                    ref={token}
+                    size="normal"
+                    sitekey={process.env.REACT_APP_SITE_KEY} 
+                    onChange={ (token) => reCAPTCHA(token)}
+                    />
+                 </div>
                  <div className="footer-right-item send">
-                    <button className="button-send" type="submit"><FontAwesomeIcon icon={faPaperPlane} /> Send</button>
+                 {verified && <button className="button-send" type="submit" disabled={!verified} onClick={sendMessage} ><FontAwesomeIcon icon={faPaperPlane} /> Send</button> }
                  </div>
             </div>
         </div>
