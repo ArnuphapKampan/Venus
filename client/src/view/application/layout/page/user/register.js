@@ -56,6 +56,7 @@ const Register = () => {
     }else if(role === ""){
       toast.warning('Please choose role.')
     }else{
+        const idLoading = toast.loading("Please wait...")
         if(profile){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
@@ -75,7 +76,8 @@ const Register = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        insertUser(res);
+                        toast.update(idLoading, {render: 'Uploading Image ✅'});
+                        insertUser(res,idLoading);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
@@ -84,13 +86,13 @@ const Register = () => {
             )
         }else{
           setLoading(true);
-          insertUser();
+          insertUser(false,idLoading);
         }
 
     }
   }
 
-  const insertUser = (res) => {
+  const insertUser = (res,idLoading) => {
       setUploading('Uploading Info To Database . . .');
       const image = (res)?JSON.stringify(res.data):'';
       const newUser = {
@@ -105,12 +107,24 @@ const Register = () => {
       registerHandler(newUser,authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success(res.data);
+        toast.update(idLoading, {
+          render: res.data,
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
         navigate("/application/user/");
         }, 1500); 
       }).catch(err => {
         setLoading(false);
-        toast.error(err.response.data.msg)
+        toast.update(idLoading, {
+          render: err.response.data.msg,
+          type: toast.TYPE.ERROR,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
       })
   }
 

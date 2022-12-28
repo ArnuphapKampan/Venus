@@ -62,7 +62,7 @@ const EditLocation = () => {
    const [imageURL,setImageURL] = useState();
    const [loading,setLoading] = useState(false);
    const [uploading,setUploading] = useState('');
-  const [formData,setFormData] = useState({
+   const [formData,setFormData] = useState({
       title: '',
       detail: ''
   });
@@ -75,7 +75,8 @@ const EditLocation = () => {
 
   const onSubmit = (e) =>{
     e.preventDefault();
-        if(locationImage){
+    const idLoading = toast.loading("Please wait...")
+      if(locationImage){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
         if(publicID){
@@ -85,7 +86,7 @@ const EditLocation = () => {
               headers:{ authtoken }
           }
           ).then(res => {
-              toast.success("Removed Image at Cloudinary Successful")
+              toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
           }).catch(err => {
             console.log(err)
           });
@@ -106,8 +107,8 @@ const EditLocation = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        toast.success('Uploaded new image Successful');
-                        updateLocation(res);
+                        toast.update(idLoading, {render: 'Uploaded new Image Successful ✅'});
+                        updateLocation(res,idLoading);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
@@ -125,18 +126,18 @@ const EditLocation = () => {
           }
           ).then(res => {
             
-            toast.success("Removed Image at Cloudinary Successful")
-            updateLocation();
+            toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
+            updateLocation(false,idLoading);
           }).catch(err => {
             console.log(err)
           });
         }else{
           setLoading(true);
-          updateLocation();
+          updateLocation(false,idLoading);
         }
   }
 
-  const updateLocation = (res) => {
+  const updateLocation = (res,idLoading) => {
       setUploading('Uploading Info To Database . . .');
       const image = (res)?JSON.stringify(res.data):locationImageOld;
       const info = {
@@ -152,12 +153,24 @@ const EditLocation = () => {
       updateLocationHandler(info,authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success("Updated Location Successful");
+        toast.update(idLoading, {
+          render: 'Updated Location Successful',
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
         navigate("/application/mapManage/");
         }, 1500); 
       }).catch(err => {
         setLoading(false);
-        toast.error(err.response.data.msg)
+        toast.update(idLoading, {
+          render: err.response.data.msg,
+          type: toast.TYPE.ERROR,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
       })
   }
 

@@ -85,9 +85,9 @@ const ModalSettingIcon = ({ iconLocation, classLocation, colorLocation, sizeLoca
           </Button></a>
           </div>
           <div className="shadow-none group"> 
-          <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
+          {/* <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
             Close
-          </Button>
+          </Button> */}
           <Button className="shadow-none ml-2" variant="primary" onClick={ e => handleClose(e) }>
             Confirm
           </Button>

@@ -50,7 +50,7 @@ function App() {
   },[dispatch]);
   return (
           <>
-            <ToastContainer/>
+            <ToastContainer theme="colored"/>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/sign-in" element={<LoginPage />} />

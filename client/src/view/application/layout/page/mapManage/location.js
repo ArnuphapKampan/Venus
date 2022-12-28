@@ -28,8 +28,8 @@ const Location = () => {
 
    //icon setting
    const [iconLocation,setIconLocation] = useState("fas fa-map-marker-alt");
-   const [classLocation,setClassLocation] = useState("text-danger");
-   const [colorLocation,setColorLocation] = useState("");
+   const [classLocation,setClassLocation] = useState("");
+   const [colorLocation,setColorLocation] = useState("#d62828");
    const [sizeLocation,setSizeLocation] = useState("");
    const [getLat,setGetLat] = useState("");
    const [getLon,setGetlon] = useState("");
@@ -54,6 +54,7 @@ const Location = () => {
     if(getLat === "" || getLon === ""){
       toast.warning('Latitude and Longitude cannot empty.')
     }else{
+        const idLoading = toast.loading("Please wait...")
         if(locationImage){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
@@ -73,7 +74,8 @@ const Location = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        insertLocation(res);
+                        toast.update(idLoading, {render: 'Uploading Image ✅'});
+                        insertLocation(res,idLoading);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
@@ -82,13 +84,13 @@ const Location = () => {
             )
         }else{
           setLoading(true);
-          insertLocation();
+          insertLocation(false,idLoading);
         }
 
     }
   }
 
-  const insertLocation = (res) => {
+  const insertLocation = (res,idLoading) => {
       setUploading('Uploading Info To Database . . .');
       const image = (res)?JSON.stringify(res.data):'';
       const info = {
@@ -103,12 +105,24 @@ const Location = () => {
       addLocationHandler(info,authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success(res.data);
+        toast.update(idLoading, {
+          render: res.data,
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
         navigate("/application/mapManage/");
         }, 1500); 
       }).catch(err => {
         setLoading(false);
-        toast.error(err.response.data.msg)
+        toast.update(idLoading, {
+          render: err.response.data.msg,
+          type: toast.TYPE.ERROR,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
       })
   }
 

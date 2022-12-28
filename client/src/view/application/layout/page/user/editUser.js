@@ -71,7 +71,8 @@ const EditUser = () => {
 
   const onSubmit = (e) =>{
     e.preventDefault();
-        if(profile){
+    const idLoading = toast.loading("Please wait...")
+    if(profile){
         setLoading(true);
         setUploading('Uploading To Cloudinary . . .');
         if(publicID){
@@ -81,11 +82,11 @@ const EditUser = () => {
               headers:{ authtoken }
           }
           ).then(res => {
-              toast.success("Removed Image at Cloudinary Successful")
+              toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
           }).catch(err => {
             console.log(err)
           });
-        }
+       }
         Resizer.imageFileResizer(
               profile[0],
                 720,
@@ -102,8 +103,8 @@ const EditUser = () => {
                         headers:{ authtoken }
                     }
                     ).then(res => {
-                        toast.success('Uploaded new profile Successful');
-                        updateUser(res);
+                        toast.update(idLoading, {render: 'Uploaded new profile Successful ✅'});
+                        updateUser(res,idLoading);
                     }).catch(err => {
                         console.log(err.response.data.msg)
                     })
@@ -120,18 +121,18 @@ const EditUser = () => {
               headers:{ authtoken }
           }
           ).then(res => {
-            toast.success("Removed Image at Cloudinary Successful")
-            updateUser();
+            toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
+            updateUser(false,idLoading);
           }).catch(err => {
             console.log(err)
           });
         }else{
           setLoading(true);
-          updateUser();
+          updateUser(false,idLoading);
         }
   }
 
-  const updateUser = (res) => {
+  const updateUser = (res,idLoading) => {
       setUploading('Uploading Info To Database . . .');
       const image = (res)?JSON.stringify(res.data):profileOld;
       const newUser = {
@@ -146,12 +147,24 @@ const EditUser = () => {
       updateHandler(newUser, authtoken).then(res =>{
         setTimeout(function(){
         setLoading(false);
-        toast.success('Updated user information successful');
+        toast.update(idLoading, {
+          render: 'Updated user information successful',
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
         navigate("/application/user/");
         }, 1500); 
       }).catch(err => {
         setLoading(false);
-        toast.error(err.response.data.msg)
+        toast.update(idLoading, {
+          render: err.response.data.msg,
+          type: toast.TYPE.ERROR,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
       })
   }
 
