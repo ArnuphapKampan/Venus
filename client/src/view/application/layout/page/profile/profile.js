@@ -10,7 +10,7 @@ import ReactLoading from 'react-loading';
 //Functions
 import { updateHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { activeMenu,logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
@@ -36,7 +36,9 @@ const Profile = () => {
           setProfileOld(res.data[0].image)
           setPublicID(res.data[0].public_id)
         }).catch(err => {
-          console.log(err.response.data.msg)
+          dispatch(logout())
+          navigate("/");
+          // console.log(err.response.data.msg)
         })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +85,9 @@ const Profile = () => {
           ).then(res => {
               toast.success("Removed Image at Cloudinary Successful")
           }).catch(err => {
-            console.log(err)
+            dispatch(logout())
+            navigate("/");
+            // console.log(err)
           });
         }
         Resizer.imageFileResizer(
@@ -105,7 +109,9 @@ const Profile = () => {
                         toast.success('Uploaded new profile Successful');
                         updateUser(res);
                     }).catch(err => {
-                        console.log(err.response.data.msg)
+                        dispatch(logout())
+                        navigate("/");
+                        // console.log(err.response.data.msg)
                     })
                 },
                 "base64"
@@ -122,7 +128,9 @@ const Profile = () => {
             toast.success("Removed Image at Cloudinary Successful")
             updateUser(res);
           }).catch(err => {
-            console.log(err)
+            dispatch(logout())
+            navigate("/");
+            // console.log(err)
           });
         }else{
           setLoading(true);

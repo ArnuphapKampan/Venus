@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { logout } from '../../../../../reducer/userReducer';
+import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { handlerPassword } from '../../../../../function/auth'
 const ModalChangePassword = ({ userID, authtoken }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [formData2,setFormData2] = useState({password: '',password2: ''});
   const { password, password2 } = formData2;
@@ -36,7 +41,9 @@ const ModalChangePassword = ({ userID, authtoken }) => {
         toast.success('Change password successfully');
         setShow(false)
       }).catch((err) => {
-        console.log(err.message)
+        dispatch(logout())
+        navigate("/");
+        // console.log(err.message)
       })
     }
   };

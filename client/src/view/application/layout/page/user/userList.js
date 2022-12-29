@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { activeMenu, logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //table
 import { Table, Tag } from 'antd';
@@ -23,6 +23,7 @@ const UserList = () => {
 
     //active menu
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const activePath = "user";
     useEffect(() => {
         dispatch(activeMenu(activePath));
@@ -48,7 +49,9 @@ const UserList = () => {
                     })
                 ));
       }).catch( err => {
-        console.log(err.response.data.msg)
+        dispatch(logout())
+        navigate("/");
+        // console.log(err.response.data.msg)
       });
     }
 
@@ -82,6 +85,10 @@ const UserList = () => {
     }
 
     const onClickHandlerRemove = (info) => {
+      if(info.role === 'admin'){ 
+        toast.warning("Cannot Remove Role Admin") 
+        return false;
+      }
       const idLoading = toast.loading("Please wait...")
       if(info.public_id){
         const publicID = info.public_id;
@@ -96,7 +103,9 @@ const UserList = () => {
              userRemove(info,idLoading)
           }, 2000)
         }).catch(err => {
-            console.log(err.response.data.msg)
+          dispatch(logout())
+          navigate("/");
+          // console.log(err.response.data.msg)
         });
       }else{
         userRemove(info,idLoading)
@@ -115,7 +124,7 @@ const UserList = () => {
         loadUserList();
       }).catch((err) =>{
         toast.error("Remove Error")
-        console.log(err.response.data.msg)
+        // console.log(err.response.data.msg)
       })
     }
 

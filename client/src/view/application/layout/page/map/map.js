@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { useNavigate } from 'react-router-dom'
+import { activeMenu,logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //replace a LongdoMap.js file
 import { longdo, map, LongdoMap } from './longdo-map/LongdoMap';
@@ -11,6 +12,7 @@ const Map = () => {
     const authtoken = localStorage.getItem('token')
     //active menu
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const activePath = "map";
     useEffect(() => {
         dispatch(activeMenu(activePath));
@@ -62,7 +64,9 @@ const Map = () => {
               });
             });
         }).catch( err => {
-          console.log(err.response.data.msg)
+          dispatch(logout())
+          navigate("/");
+          // console.log(err.response.data.msg)
         });
 
 

@@ -9,7 +9,7 @@ import { updateLocationHandler, handlerGetInfoEditLocation } from '../../../../.
 import ModalSettingIcon from './modalEdit';
 import ModalGetLocation from './modalGetLocationEdit';
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { activeMenu,logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
@@ -41,7 +41,9 @@ const EditLocation = () => {
         setGetLat(res.data[0].latitude);
         setGetlon(res.data[0].longitude);
       }).catch(err => {
-        console.log(err.response.data.msg)
+        dispatch(logout())
+        navigate("/");
+        // console.log(err.response.data.msg)
       })
      // eslint-disable-next-line react-hooks/exhaustive-deps
    },[dispatch])
@@ -88,7 +90,9 @@ const EditLocation = () => {
           ).then(res => {
               toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
           }).catch(err => {
-            console.log(err)
+            dispatch(logout())
+            navigate("/");
+            // console.log(err)
           });
         }
         Resizer.imageFileResizer(
@@ -110,7 +114,9 @@ const EditLocation = () => {
                         toast.update(idLoading, {render: 'Uploaded new Image Successful ✅'});
                         updateLocation(res,idLoading);
                     }).catch(err => {
-                        console.log(err.response.data.msg)
+                      dispatch(logout())
+                      navigate("/");
+                      // console.log(err.response.data.msg)
                     })
                 },
                 "base64"
@@ -129,7 +135,9 @@ const EditLocation = () => {
             toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
             updateLocation(false,idLoading);
           }).catch(err => {
-            console.log(err)
+            dispatch(logout())
+            navigate("/");
+            // console.log(err)
           });
         }else{
           setLoading(true);

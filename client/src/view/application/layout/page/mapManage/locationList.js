@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { activeMenu,logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //table
 import { Table, Tag } from 'antd';
@@ -22,6 +22,7 @@ const LocationList = () => {
 
     //active menu
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const activePath = "mapManage";
     useEffect(() => {
         dispatch(activeMenu(activePath));
@@ -47,7 +48,9 @@ const LocationList = () => {
                     })
                 ));
       }).catch( err => {
-        console.log(err.response.data.msg)
+        dispatch(logout())
+        navigate("/");
+        // console.log(err.response.data.msg)
       });
     }
 
@@ -93,7 +96,9 @@ const LocationList = () => {
            toast.success("Removed Image at Cloudinary Successful")
            userRemove(info)
         }).catch(err => {
-            console.log(err.response.data.msg)
+          dispatch(logout())
+          navigate("/");
+            // console.log(err.response.data.msg)
         });
       }else{
         userRemove(info)
@@ -106,7 +111,7 @@ const LocationList = () => {
         loadLocationList();
       }).catch((err) =>{
         toast.error("Remove Error")
-        console.log(err.response.data.msg)
+        // console.log(err.response.data.msg)
       })
     }
 

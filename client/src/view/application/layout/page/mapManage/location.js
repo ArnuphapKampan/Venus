@@ -10,7 +10,7 @@ import ModalGetLocation from './modalGetLocation';
 //Functions
 import { addLocationHandler } from '../../../../../function/location'
 //active menu
-import { activeMenu } from '../../../../../reducer/userReducer';
+import { activeMenu,logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
@@ -77,7 +77,9 @@ const Location = () => {
                         toast.update(idLoading, {render: 'Uploading Image ✅'});
                         insertLocation(res,idLoading);
                     }).catch(err => {
-                        console.log(err.response.data.msg)
+                        dispatch(logout())
+                        navigate("/");
+                        // console.log(err.response.data.msg)
                     })
                 },
                 "base64"
