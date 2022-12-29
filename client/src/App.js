@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import LoginPage from './view/loginPage/loginPage'
 import HomePage from './view/homePage/home/home'
 import Application from './view/application/application'
@@ -20,7 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //Redux
 import { useDispatch } from 'react-redux';
-import { login } from './reducer/userReducer';
+import { login, logout } from './reducer/userReducer';
 //import function
 import { currentUser } from './function/auth';
 //protected route
@@ -28,6 +28,7 @@ import UserRoute from './routes/userRoute'
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //active first
   useEffect(() => {
@@ -44,9 +45,12 @@ function App() {
         }
         dispatch(login(payload))
       }).catch( err => {
-        console.log(err.response.data.msg)
+        dispatch(logout())
+        navigate("/");
+        // console.log(err.response.data.msg)
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch]);
   return (
           <>

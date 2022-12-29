@@ -4,10 +4,25 @@ import { faEnvelope,faPhone,faPaperPlane } from '@fortawesome/free-solid-svg-ico
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from 'react-toastify';
 import React, { useState, useRef } from 'react';
-
+import axios from 'axios';
 function Footer(){
     const token = useRef(null);
     const [verified,setVerified] = useState(false);
+    const [formData,setFormData] = useState({
+        name:'',
+        email:'',
+        telephone:'',
+        description:'',
+    });
+  
+    const { name, email, telephone, description } = formData;
+    const onChange = (e) =>{
+      setFormData({ ...formData,[e.target.name]:e.target.value });
+    }
+
+
+
+
     const reCAPTCHA = (token) => {
         if(!token){
             setVerified(false);
@@ -16,19 +31,42 @@ function Footer(){
             setVerified(true);
         }
     }
-    const sendMessage = () =>{
+
+    const sendMessage = (e) =>{
+        e.preventDefault();
         setVerified(false);
         const idLoading = toast.loading("Sending ...")
-        setTimeout(function(){
-            toast.update(idLoading, {
-                render: 'Your message has been sent.',
-                type: toast.TYPE.SUCCESS,
-                autoClose: 5000,
-                closeButton: true,
-                isLoading: false
-             });
-             token.current.reset();
-        }, 3000);
+
+        let message = {
+            name:name,
+            email:email,
+            telephone:telephone,
+            description:description,
+        }
+
+        axios.post(process.env.REACT_APP_API+'/send-message',
+        { 
+            message: message
+        }
+        ).then(res => {
+            console.log(res)
+            setTimeout(function(){
+                toast.update(idLoading, {
+                    render: 'Your message has been sent. ✅✅✅',
+                    type: toast.TYPE.SUCCESS,
+                    autoClose: 5000,
+                    closeButton: true,
+                    isLoading: false
+                 });
+                 token.current.reset();
+                 e.target.reset();
+            }, 1000);
+        }).catch(err => {
+            console.log(err.response.data.msg)
+        })
+
+
+
     }
     return(
         <div className="footer-content" id="footer">
@@ -59,18 +97,19 @@ function Footer(){
                 </div>
             </div>
             <div className="footer-right">
+                <form onSubmit={ e => sendMessage(e)}>
                 <h1>Contact Us</h1>
                 <div className="footer-right-item">
-                    <label>Name:</label><input type="text" name="name"></input><br/>
+                    <label>Name:</label><input type="text" name="name" autoComplete="off" required onChange={ e => onChange(e) }></input><br/>
                 </div>   
                 <div className="footer-right-item">
-                    <label>Email:</label><input type="text" name="email"></input><br/>
+                    <label>Email:</label><input type="email" name="email" autoComplete="off" required onChange={ e => onChange(e) }></input><br/>
                 </div>
                 <div className="footer-right-item">
-                    <label>Telephone:</label><input type="text" name="tel"></input><br/>
+                    <label>Telephone:</label><input type="text" name="telephone" autoComplete="off" required onChange={ e => onChange(e) }></input><br/>
                 </div>
                 <div className="footer-right-item">
-                    <label>Description:</label><textarea rows={5} cols={5}/><br/>
+                    <label>Description:</label><textarea type="text" rows={5} cols={5} name="description" autoComplete="off" required onChange={ e => onChange(e) }/><br/>
                  </div>
                  <div className="footer-right-item mb-2">
                     <ReCAPTCHA style={{width: '100%'}}
@@ -81,8 +120,9 @@ function Footer(){
                     />
                  </div>
                  <div className="footer-right-item send">
-                 {verified && <button className="button-send" type="submit" disabled={!verified} onClick={sendMessage} ><FontAwesomeIcon icon={faPaperPlane} /> Send</button> }
+                 {verified && <button className="button-send" type="submit" disabled={!verified} ><FontAwesomeIcon icon={faPaperPlane} /> Send</button> }
                  </div>
+                 </form>
             </div>
         </div>
     );
