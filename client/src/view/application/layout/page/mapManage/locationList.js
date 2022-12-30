@@ -12,7 +12,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 //Functions
-import { handlerRemove } from '../../../../../function/auth'
+import { handlerLocationRemove } from '../../../../../function/location'
 //query info
 import { locationList } from '../../../../../query/location/locationList';
 const LocationList = () => {
@@ -76,7 +76,7 @@ const LocationList = () => {
       Modal.confirm({
         title: 'Confirm',
         icon: <ExclamationCircleOutlined />,
-        content: `Do you want to delete Username: ${info.username} Name: ${info.name} ? `,
+        content: `Do you want to delete location? `,
         onOk: () => { onClickHandlerRemove(info)  },
         okText: 'Confirm',
         cancelText: 'Cancel',
@@ -84,8 +84,9 @@ const LocationList = () => {
     }
 
     const onClickHandlerRemove = (info) => {
+      const idLoading = toast.loading("Please wait...")
       if(info.public_id){
-        toast.warning("Removing Image at Cloudinary . . .")
+        toast.update(idLoading, {render: 'Removing Image at Cloudinary...'});
         const publicID = info.public_id;
         axios.post(process.env.REACT_APP_API+'/cloudinary-remove',
         { publicID },
@@ -93,21 +94,27 @@ const LocationList = () => {
             headers:{ authtoken }
         }
         ).then(res => {
-           toast.success("Removed Image at Cloudinary Successful")
-           userRemove(info)
+           toast.update(idLoading, {render: 'Removed Image at Cloudinary Successful ✅'});
+           locationRemove(info,idLoading)
         }).catch(err => {
           dispatch(logout())
           navigate("/");
             // console.log(err.response.data.msg)
         });
       }else{
-        userRemove(info)
+        locationRemove(info,idLoading)
       }
     }
 
-    const userRemove = (info) =>{
-      handlerRemove(info.key,authtoken).then((res) => {
-        toast.success("Remove User Successful")
+    const locationRemove = (info,idLoading) =>{
+      handlerLocationRemove(info.key,authtoken).then((res) => {
+        toast.update(idLoading, {
+          render: "Remove Location Successful ✅",
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          closeButton: true,
+          isLoading: false
+       });
         loadLocationList();
       }).catch((err) =>{
         toast.error("Remove Error")

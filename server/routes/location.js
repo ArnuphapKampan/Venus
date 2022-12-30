@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addLocation,locationList,locationEnable,readLocation,updateLocation } = require('../controllers/location')
+const { addLocation,locationList,locationEnable,readLocation,updateLocation,remove } = require('../controllers/location')
 
 //middleware
 const { auth } = require('../middleware/auth');
@@ -29,4 +29,9 @@ router.get('/location-read/:id',auth,readLocation);
 // @desc  Route location
 // @access Private
 router.post('/location-update',auth,updateLocation);
+
+// @route POST localhost:8888/api/location-remove
+// @desc  Route remove
+// @access Private
+router.delete('/location-remove/:id',auth,remove);
 module.exports = router;

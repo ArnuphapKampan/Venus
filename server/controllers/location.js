@@ -3,6 +3,7 @@ const { locationLists } = require('./query/location/locationList')
 const { locationEnable } = require('./query/location/locationEnable')
 const { locationInfo } = require('./query/location/locationInfo')
 const { locationUpdate } = require('./query/location/locationUpdate')
+const { locationRemove } = require('./query/location/locationRemove')
 
 
 exports.addLocation = async (req, res, next) => {
@@ -66,6 +67,15 @@ exports.updateLocation = async (req, res) => {
         };
         const message = await locationUpdate(info);
         res.send(message);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.remove = async (req, res) => {
+    try{
+        const result = await locationRemove(req.params.id);
+        res.json(result);
     }catch(err){
         res.status(500).send(err)
     }

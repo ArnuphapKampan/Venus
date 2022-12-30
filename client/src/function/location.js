@@ -17,3 +17,9 @@ export const handlerGetInfoEditLocation = async (id,authtoken) => {
         headers:{ authtoken }
     });
 }
+
+export const handlerLocationRemove = async (id,authtoken) => {
+    return await axios.delete(process.env.REACT_APP_API+`/location-remove/${id}`,{
+        headers:{ authtoken }
+    });
+}
