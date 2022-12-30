@@ -3024,6 +3024,11 @@ input[type=button].btn-block {
   left: auto;
 }
 
+.dropdown-menu-dark {
+  right: 0;
+  left: auto;
+}
+
 @media (min-width: 576px) {
   .dropdown-menu-sm-left {
     right: auto;
@@ -3176,7 +3181,7 @@ input[type=button].btn-block {
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #007bff;
+  background-color: #212529 !important;
 }
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #6c757d;

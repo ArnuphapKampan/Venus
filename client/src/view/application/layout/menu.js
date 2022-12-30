@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { decodeToken } from "react-jwt";
 import { useSelector } from 'react-redux'
 const Menu = () => {
     const decoded = decodeToken(localStorage.getItem('token'));
     const { userStorage } = useSelector((state) => ({ ...state }))
+    const [counter,setCounter] = useState(0);
+    
+    useEffect(() => {
+        count();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   },[counter])
+
+   const count = () => {
+    setTimeout(() => setCounter(counter+1), 1000)
+   }
   return (
     <div id="layoutSidenav_nav">
         <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion" style={{boxShadow:"0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22)"}}>
@@ -20,7 +30,7 @@ const Menu = () => {
                     <NavLink style={{borderRight: (userStorage.activeMenu === "message")?'5px solid skyblue':'',color: (userStorage.activeMenu === "message")?'#007bff':'#6c757d'}} className="nav-link" to={"message/"}>
                     <i className="fas fa-comments"></i>
                         <div className="sb-nav-link-icon"></div>
-                        Message<sup><i className="fa fa-bell text-danger"></i><sup><span className="badge rounded-pill badge-notification bg-danger">10</span></sup></sup>
+                        Message<sup><i className="fa fa-bell text-danger"></i><sup><span className="badge rounded-pill badge-notification bg-danger">{ counter }</span></sup></sup>
                     </NavLink>
                     <NavLink style={{borderRight: (userStorage.activeMenu === "map")?'5px solid skyblue':'',color: (userStorage.activeMenu === "map")?'#007bff':'#6c757d'}} className="nav-link" to={"map/"}>
                     <i className="fas fa-map-marked-alt"></i>

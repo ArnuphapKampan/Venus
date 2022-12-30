@@ -29,6 +29,7 @@ function LoginPage() {
       //useless because refresh new page store to empty
       const data = {
             token:res.data.token,
+            id:res.data.payload.user.id,
             username:res.data.payload.user.username,
             role:res.data.payload.user.role,
             image:res.data.payload.user.image,

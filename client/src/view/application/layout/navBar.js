@@ -45,7 +45,7 @@ const NavBar = () => {
             <Link className="shadow-none nav-link dropdown-toggle" id="userDropdown" to="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src={ image} width="40" height="40" className="shadow-none rounded-circle" alt="" />
             </Link>
-                <div className="shadow-none dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <div className="shadow-none dropdown-menu dropdown-menu-dark" aria-labelledby="userDropdown">
                     <Link className="shadow-none dropdown-item" to={`profile/${user.id}`}>Profile</Link>
                     <Link className="shadow-none dropdown-item" to="#">Activity Log</Link>
                     <div className="shadow-none dropdown-divider"></div>

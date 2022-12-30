@@ -49,7 +49,6 @@ function Footer(){
             message: message
         }
         ).then(res => {
-            console.log(res)
             setTimeout(function(){
                 toast.update(idLoading, {
                     render: 'Your message has been sent. ✅✅✅',
