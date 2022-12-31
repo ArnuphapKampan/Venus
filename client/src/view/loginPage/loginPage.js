@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { loginHandler } from '../../function/auth'
 import { useDispatch } from 'react-redux';
 import { login } from '../../reducer/userReducer';
-function LoginPage() {
+function LoginPage({messageCount}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData,setFormData] = useState({
@@ -36,7 +36,7 @@ function LoginPage() {
             
       }
       dispatch(login(data))
-
+      messageCount(res.data.token);
       localStorage.setItem('token',res.data.token);
 
       toast.success(res.data);

@@ -1,9 +1,9 @@
 import React from 'react'
 import Layout from './layout/layout'
-function Application() {
+function Application({counter}) {
   return (
     <div>
-       <Layout/>
+       <Layout counter={counter} />
     </div>
   )
 }

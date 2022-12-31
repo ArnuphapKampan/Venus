@@ -1,20 +1,12 @@
-import React, { useEffect,useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { decodeToken } from "react-jwt";
 import { useSelector } from 'react-redux'
-const Menu = () => {
+const Menu = ({counter}) => {
     const decoded = decodeToken(localStorage.getItem('token'));
     const { userStorage } = useSelector((state) => ({ ...state }))
-    const [counter,setCounter] = useState(0);
-    
-    useEffect(() => {
-        count();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-   },[counter])
 
-   const count = () => {
-    setTimeout(() => setCounter(counter+1), 1000)
-   }
+
   return (
     <div id="layoutSidenav_nav">
         <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion" style={{boxShadow:"0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22)"}}>

@@ -1,4 +1,8 @@
 const { sendMessages } = require('./query/message/sendMessages')
+const { listMessages } = require('./query/message/listMessages')
+const { unreadMessages } = require('./query/message/unreadMessages')
+const { noteMessages } = require('./query/message/noteMessages')
+
 const axios = require('axios');
 const moment = require('moment');
 moment.locale('th')
@@ -9,6 +13,33 @@ exports.sendMessage = async (req, res) => {
         await lineNotify(message);
         const result = await sendMessages(message);
         res.json(result);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.listMessage = async (req, res) => {
+    try{
+        const result = await listMessages();
+        res.json(result);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.unreadMessage = async (req, res) => {
+    try{
+        const result = await unreadMessages();
+        res.json(result);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.noteMessage = async (req, res) => {
+    try{
+        const message = await noteMessages(req.body);
+        res.send(message);
     }catch(err){
         res.status(500).send(err)
     }

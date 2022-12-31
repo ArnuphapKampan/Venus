@@ -165,7 +165,6 @@ const UserList = () => {
         },
         {
             title: 'Last login', 
-
             dataIndex: 'lastLogin',
             render: (text) => <Moment format="LLLL">{text}</Moment>,
         },

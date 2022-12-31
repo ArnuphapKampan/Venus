@@ -4,12 +4,12 @@ import Footer from './footer'
 import Menu from './menu'
 import NavBar from './navBar'
 import { Outlet } from 'react-router-dom'
-const Layout = () => {
+const Layout = ({counter}) => {
   return (
       <>
       <NavBar/>
       <div id="layoutSidenav">
-          <Menu/>
+          <Menu counter={counter} />
           <div id="layoutSidenav_content">
             <Outlet/>
             <Footer/>
