@@ -19,6 +19,11 @@ const Menu = ({counter}) => {
                         <div className="sb-nav-link-icon"></div>
                         Dashboard
                     </NavLink>
+                    <NavLink style={{borderRight: (userStorage.activeMenu === "construction")?'5px solid skyblue':'',color: (userStorage.activeMenu === "construction")?'#007bff':'#6c757d'}} className="nav-link" to={"construction/"}>
+                    <i className="fas fa-hard-hat"></i>
+                        <div className="sb-nav-link-icon"></div>
+                        Construction
+                    </NavLink>
                     <NavLink style={{borderRight: (userStorage.activeMenu === "message")?'5px solid skyblue':'',color: (userStorage.activeMenu === "message")?'#007bff':'#6c757d'}} className="nav-link" to={"message/"}>
                     <i className="fas fa-comments"></i>
                         <div className="sb-nav-link-icon"></div>

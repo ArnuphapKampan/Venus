@@ -14,6 +14,7 @@ import Map from './view/application/layout/page/map/map'
 import Location from './view/application/layout/page/mapManage/location'
 import EditLocation from './view/application/layout/page/mapManage/editLocation'
 import LocationList from './view/application/layout/page/mapManage/locationList'
+import Construction from './view/application/layout/page/construction/construction'
 
 //Notify
 import { ToastContainer } from 'react-toastify';
@@ -91,6 +92,7 @@ function App() {
                   <Route  path="mapManage/" element={<LocationList />} />
                   <Route  path="mapManage/location/" element={<Location />} /> 
                   <Route  path="mapManage/editLocation/:locationID" element={<EditLocation />} /> 
+                  <Route  path="construction/" element={<Construction />} /> 
                 </Route>
               </Route>
             </Routes>
