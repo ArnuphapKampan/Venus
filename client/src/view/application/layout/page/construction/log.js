@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ShowLog from './showLog';
 import { Table } from 'antd';
-
+import { BranchesOutlined } from '@ant-design/icons';
 const Log = () => {
   const [show, setShow] = useState(false);
   const [logInfo] = useState([
@@ -67,6 +67,7 @@ const Log = () => {
         dataIndex: 'index',
         align: 'center',
         width: '5%',
+        sorter: (a, b) => b.index - a.index,
       },
       {
         title: 'Transection Date', 
@@ -81,21 +82,21 @@ const Log = () => {
     ];
   return (
     <>
-      <label  style={{width:'150px',cursor: 'pointer'}}  variant="" onClick={handleShow}>Log</label>
+      <label  style={{padding:'0',margin:'0',width:'150px',cursor: 'pointer'}} onClick={handleShow}>Log</label>
       <Modal size="xl" show={show} onHide={handleClose}>
-        <Modal.Header>
-          Transection Data
+        <Modal.Header className="shadow-none" closeButton onClick={e => handleClose(e)}>
+          <label><BranchesOutlined /> Transection Data</label>
         </Modal.Header>
         <Modal.Body>
         <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={logInfo} />
         </Modal.Body>
-        <Modal.Footer className="shadow-none justify-content-end">
+        {/* <Modal.Footer className="shadow-none justify-content-end">
           <div className="shadow-none group"> 
           <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
             Close
           </Button>
           </div>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </>
   );

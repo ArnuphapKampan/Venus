@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ReactDiffViewer, { DiffMethod } from "react-diff-viewer";
+import { BranchesOutlined } from '@ant-design/icons';
 
 const ShowLog = ({logInfo, indexKey, status}) => {
   const [show, setShow] = useState(false);
@@ -36,6 +37,9 @@ const ShowLog = ({logInfo, indexKey, status}) => {
       </Button>
     </div>
       <Modal fullscreen={true} show={show} onHide={handleClose}>
+        <Modal.Header className="shadow-none" closeButton onClick={e => handleClose(e)}>
+          <label><BranchesOutlined /> Transection Log</label>
+        </Modal.Header>
         <Modal.Body>
         <ReactDiffViewer
           oldValue={JSON.stringify(oldJSON, undefined, 4)}
@@ -48,13 +52,13 @@ const ShowLog = ({logInfo, indexKey, status}) => {
           // renderContent={highlightSyntax}
         />
         </Modal.Body>
-        <Modal.Footer className="shadow-none justify-content-end">
+        {/* <Modal.Footer className="shadow-none justify-content-end">
           <div className="shadow-none group"> 
           <Button className="shadow-none" variant="secondary" onClick={e => handleClose(e)}>
             Close
           </Button>
           </div>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </>
   );
