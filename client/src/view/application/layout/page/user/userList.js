@@ -4,11 +4,11 @@ import { NavLink,useNavigate } from 'react-router-dom'
 import { activeMenu, logout } from '../../../../../reducer/userReducer';
 import { useDispatch } from 'react-redux';
 //table
-import { Table, Tag } from 'antd';
+import { Table, Tag, Dropdown } from 'antd';
 import { Avatar,Image } from 'antd';
 import Moment from 'react-moment';
 import { Switch, Modal } from 'antd';
-import { CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined, DownCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -177,7 +177,26 @@ const UserList = () => {
         {
           key: 'id',
           align: 'center',
-          render: (info) => <div className="shadow-none d-flex justify-content-center">  <NavLink className="shadow-none nav-link" align="right" to={`editUser/${info.key}`} ><EditOutlined className="shadow-none btn text-sm text-info" /></NavLink><div style={{borderRight:'solid'}} ></div><DeleteOutlined onClick={ (e) => { confirmRemove(info) } } className="shadow-none btn text-sm text-danger" /> </div>
+          render: (info) =>{ 
+            const items = [
+              {
+                key: '1',
+                label: (<NavLink style={{cursor: 'pointer'}} to={`editUser/${info.key}`} ><label  style={{padding:'0',margin:'0',width:'100px'}}>Edit</label></NavLink>),
+                icon: <EditOutlined />
+              },
+              {
+                key: '2',
+                label: ('Delete'),
+                icon: <DeleteOutlined />,
+                onClick: () => confirmRemove(info)
+              }
+            ];
+            return (
+              <Dropdown menu={{ items }} >
+                  <DownCircleFilled style={{fontSize:'20px',cursor: 'pointer',color:'#343a40'}} />
+              </Dropdown>
+            )
+          },
         }
       ];
       

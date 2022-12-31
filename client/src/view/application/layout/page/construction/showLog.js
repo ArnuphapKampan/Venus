@@ -17,7 +17,7 @@ const ShowLog = ({logInfo, indexKey, status}) => {
     const index = logInfo.findIndex((index) => index.key === indexKey);
 
     setNewJSON(logInfo[index].content);
-    setOldJSON((logInfo[index].status === 'create')?logInfo[index].content:logInfo[index-1].content);
+    setOldJSON((logInfo[index].status === 'create')?{}:logInfo[index-1].content);
     setShow(true);
   }
   
@@ -47,8 +47,8 @@ const ShowLog = ({logInfo, indexKey, status}) => {
           splitView={true}
           compareMethod={DiffMethod.WORDS}
           styles={newStyles}
-          leftTitle="Old Transection"
-          rightTitle="New Transection"
+          leftTitle="Old Transection Data"
+          rightTitle="New Transection Data"
           // renderContent={highlightSyntax}
         />
         </Modal.Body>

@@ -19,11 +19,6 @@ const Menu = ({counter}) => {
                         <div className="sb-nav-link-icon"></div>
                         Dashboard
                     </NavLink>
-                    <NavLink style={{borderRight: (userStorage.activeMenu === "construction")?'5px solid skyblue':'',color: (userStorage.activeMenu === "construction")?'#007bff':'#6c757d'}} className="nav-link" to={"construction/"}>
-                    <i className="fas fa-hard-hat"></i>
-                        <div className="sb-nav-link-icon"></div>
-                        Construction
-                    </NavLink>
                     <NavLink style={{borderRight: (userStorage.activeMenu === "message")?'5px solid skyblue':'',color: (userStorage.activeMenu === "message")?'#007bff':'#6c757d'}} className="nav-link" to={"message/"}>
                     <i className="fas fa-comments"></i>
                         <div className="sb-nav-link-icon"></div>
@@ -35,7 +30,21 @@ const Menu = ({counter}) => {
                         Map
                     </NavLink>
                     {/* <div className="sb-sidenav-menu-heading">Interface</div> */}
-                    
+                    <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePagesContract" aria-expanded="false" aria-controls="collapsePagesContract" style={{color:'#6c757d'}}>
+                        <i className="fas fa-file-contract"></i>
+                        <div className="sb-nav-link-icon"></div>
+                        Contract
+                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </NavLink>
+                    <div className="collapse" id="collapsePagesContract" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                        <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <NavLink style={{borderRight: (userStorage.activeMenu === "construction")?'5px solid skyblue':'',color: (userStorage.activeMenu === "construction")?'#007bff':'#6c757d'}} className="nav-link" to={"construction/"}>
+                            <i className="fas fa-hard-hat"></i>
+                                <div className="sb-nav-link-icon"></div>
+                                Construction
+                            </NavLink>
+                        </nav>
+                    </div>
                     <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" style={{color:'#6c757d'}}>
                         <i className="fas fa-cogs"></i>
                         <div className="sb-nav-link-icon"></div>

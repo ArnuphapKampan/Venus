@@ -38,33 +38,6 @@ const Construction = () => {
     //active menu
 
 
-    const items = [
-      {
-        key: '1',
-        label: ('Detail'),
-        icon: <MoreOutlined />
-      },
-      {
-        key: '2',
-        label: ('Print'),
-        icon: <PrinterOutlined />
-      },
-      {
-        key: '3',
-        label: (<Log/>),
-        icon: <BranchesOutlined />
-      },
-      {
-        key: '4',
-        label: ('Edit'),
-        icon: <EditOutlined />
-      },
-      {
-        key: '5',
-        label: ('Delete'),
-        icon: <DeleteOutlined />
-      }
-    ];
 
     const columns = [
       {
@@ -94,6 +67,33 @@ const Construction = () => {
         width: '10%',
         align: 'center',
         render: (text) =>{ 
+          const items = [
+            {
+              key: '1',
+              label: ('Contract Detail'),
+              icon: <MoreOutlined />
+            },
+            {
+              key: '2',
+              label: ('Print Contract'),
+              icon: <PrinterOutlined />
+            },
+            {
+              key: '3',
+              label: (<Log/>),
+              icon: <BranchesOutlined />
+            },
+            {
+              key: '4',
+              label: ('Edit'),
+              icon: <EditOutlined />
+            },
+            {
+              key: '5',
+              label: ('Delete'),
+              icon: <DeleteOutlined />
+            }
+          ];
           return (
             <Dropdown menu={{ items }}style={{width:'100px'}} >
                 <DownCircleFilled style={{fontSize:'20px',cursor: 'pointer',color:'#343a40'}} />
