@@ -38,10 +38,10 @@ const Menu = ({counter}) => {
                     </NavLink>
                     <div className="collapse" id="collapsePagesContract" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                         <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                            <NavLink style={{borderRight: (userStorage.activeMenu === "construction")?'5px solid skyblue':'',color: (userStorage.activeMenu === "construction")?'#007bff':'#6c757d'}} className="nav-link" to={"construction/"}>
+                            <NavLink style={{borderRight: (userStorage.activeMenu === "contract")?'5px solid skyblue':'',color: (userStorage.activeMenu === "contract")?'#007bff':'#6c757d'}} className="nav-link" to={"contract/"}>
                             <i className="fas fa-hard-hat"></i>
                                 <div className="sb-nav-link-icon"></div>
-                                Construction
+                                Building Contract
                             </NavLink>
                         </nav>
                     </div>

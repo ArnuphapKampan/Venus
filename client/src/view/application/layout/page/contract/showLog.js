@@ -10,7 +10,6 @@ const ShowLog = ({logInfo, indexKey, status}) => {
   const [oldJSON,setOldJSON] = useState({});
   
   const handleClose = (e) => {
-    e.preventDefault();
     setShow(false)
   };
   const handleShow = () => {

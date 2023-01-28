@@ -11,20 +11,22 @@ import ReactLoading from 'react-loading';
 import { updateHandler, handlerGetInfoEditUser } from '../../../../../function/auth'
 //active menu
 import { activeMenu,logout } from '../../../../../reducer/userReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
 const Profile = () => {
   const params = useParams();
   const userID = params.userID;
   const authtoken = localStorage.getItem('token')
-
+  const { userStorage } = useSelector((state) => ({ ...state }))
+  const user = userStorage.user;
+  const [returnHTML,setReturnHTML] = useState(false);
    //active menu
    const dispatch = useDispatch();
    const activePath = "dashboard";
    useEffect(() => {
         dispatch(activeMenu(activePath));
-      
+        if(Number(user.id) === Number(userID)){ setReturnHTML(true); }
         handlerGetInfoEditUser(userID,authtoken).then((res) => {
           setFormData({
             name: res.data[0].name,
@@ -42,7 +44,7 @@ const Profile = () => {
         })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
-   },[dispatch])
+   },[dispatch,user])
    //active menu
 
   const navigate = useNavigate();
@@ -163,7 +165,7 @@ const Profile = () => {
   }
 
 
-  return (
+  if(returnHTML){ return (
     <main>
         <div className="shadow-none container-fluid">
             <div className="shadow-none container">
@@ -193,7 +195,7 @@ const Profile = () => {
             </div>
         </div>
     </main>
-  )
+  )}
 }
 
 export default Profile
