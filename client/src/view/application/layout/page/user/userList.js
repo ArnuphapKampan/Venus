@@ -8,7 +8,7 @@ import { Table, Tag, Dropdown } from 'antd';
 import { Avatar,Image } from 'antd';
 import Moment from 'react-moment';
 import { Switch, Modal } from 'antd';
-import { CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined, DownCircleFilled } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, DownCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -16,6 +16,8 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { handlerRemove } from '../../../../../function/auth'
 //query info
 import { userLists } from '../../../../../query/userLists';
+//css
+import '../../../../css/user.css';
 const UserList = () => {
 
     const [infoUserList,setInfoUserList] = useState([])
@@ -166,13 +168,13 @@ const UserList = () => {
         {
             title: 'Last login', 
             dataIndex: 'lastLogin',
-            render: (text) => <Moment format="LLLL">{text}</Moment>,
+            render: (text) => <Moment format="DD/MM/YYYY HH:mm:ss">{text}</Moment>,
         },
         {
           title: 'Enable',
           dataIndex: 'enable',
           key: 'id',
-          render: (text,key) => <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} defaultChecked={(text === "enable")?"checked":""} onChange={ (e) => onToggleEnable(key.key,e) } />
+          render: (text,key) => <Switch checkedChildren="ON" unCheckedChildren="OFF" defaultChecked={(text === "enable")?"checked":""} onChange={ (e) => onToggleEnable(key.key,e) } />
         },
         {
           key: 'id',
@@ -205,7 +207,7 @@ const UserList = () => {
         <div className="shadow-none container-fluid">
             <h1 className="shadow-none mt-4">User List</h1>
             <div align="right">
-              <NavLink className="shadow-none nav-link" align="right" to="register/" ><button type="button" className="shadow-none btn btn-success" name="btn-register" >Add User</button></NavLink>
+              <NavLink className="shadow-none nav-link" align="right" to="register/" ><button type="button" className="shadow-none btn btn-success" name="btn-register" > <i className="	fas fa-plus"></i> New User</button></NavLink>
             </div>
               <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={infoUserList} />
         </div>

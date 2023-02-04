@@ -31,6 +31,8 @@ function LoginPage({messageCount}) {
             token:res.data.token,
             id:res.data.payload.user.id,
             username:res.data.payload.user.username,
+            name:res.data.payload.user.name,
+            surname:res.data.payload.user.surname,
             role:res.data.payload.user.role,
             image:res.data.payload.user.image,
             

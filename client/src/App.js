@@ -14,7 +14,9 @@ import Map from './view/application/layout/page/map/map'
 import Location from './view/application/layout/page/mapManage/location'
 import EditLocation from './view/application/layout/page/mapManage/editLocation'
 import LocationList from './view/application/layout/page/mapManage/locationList'
-import Construction from './view/application/layout/page/construction/construction'
+import ContractList from './view/application/layout/page/contract/contractList'
+import ContractCreate from './view/application/layout/page/contract/contractCreate'
+import ContractEdit from './view/application/layout/page/contract/contractEdit'
 
 //Notify
 import { ToastContainer } from 'react-toastify';
@@ -43,6 +45,8 @@ function App() {
         const payload = { 
           id: res.data[0].id,
           username: res.data[0].username,
+          name: res.data[0].name,
+          surname: res.data[0].surname,
           role: res.data[0].role,
           image: res.data[0].image
         }
@@ -92,7 +96,9 @@ function App() {
                   <Route  path="mapManage/" element={<LocationList />} />
                   <Route  path="mapManage/location/" element={<Location />} /> 
                   <Route  path="mapManage/editLocation/:locationID" element={<EditLocation />} /> 
-                  <Route  path="construction/" element={<Construction />} /> 
+                  <Route  path="contract/" element={<ContractList />} /> 
+                  <Route  path="contract/contractCreate/" element={<ContractCreate />} />
+                  <Route  path="contract/contractEdit/:contractID" element={<ContractEdit />} />
                 </Route>
               </Route>
             </Routes>

@@ -1,0 +1,58 @@
+.textOnInput {
+    position: relative;
+    margin-top:1rem;
+}
+.textOnInput label {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    padding: 2px;
+    z-index: 1;
+}
+.textOnInput label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+.textOnInput2 {
+    position: relative;
+    margin-top:1rem;
+}
+.textOnInput2 label {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    padding: 2px;
+    z-index: 1;
+}
+.textOnInput2 label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+.react-datepicker-popper {
+    z-index: 2 !important;
+}
+/* label {
+    font-size: 16px;
+    font-weight: 1500;
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+.form-control {
+    box-shadow: none !important;
+
+} */
+input::placeholder {
+    font: 12px/3 sans-serif;
+}
