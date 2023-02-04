@@ -7,7 +7,7 @@ module.exports.insertLog = (data) => {
         `INSERT INTO log 
                   ( log_time,
                     contact_id,
-                    create_by,
+                    action_by,
                     log_url,
                     log_reference,
                     log_engine,

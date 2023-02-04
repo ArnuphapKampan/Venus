@@ -35,7 +35,7 @@ const Log = (props) => {
                     key:row.log_id,
                     index:i++,
                     status:row.log_status,
-                    create_by:row.create_by,
+                    action_by:row.action_by,
                     date:row.log_time,
                     engine:row.log_engine,
                     content:JSON.parse(row.log_detail)
@@ -80,11 +80,11 @@ const Log = (props) => {
       }
       },
       {
-        title: 'Create & Update By', 
+        title: 'Action By', 
         width: '20%',
         render(text) {
           return (
-            <>{text.create_by}</>
+            <>{text.action_by}</>
           );
       }
       },
