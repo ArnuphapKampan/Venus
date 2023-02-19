@@ -10,8 +10,8 @@ exports.addContract = async (req, res, next) => {
     const { detail,url,status,engine } = req.body;
     try{
         let info = {
-            document:detail.detail.document_number,
-            document_format:detail.detail.document_number,
+            document:detail.detail.document,
+            document_format:detail.detail.document_format,
             document_number:detail.detail.document_number,
             detail:detail.detail,
             section_1:detail.section_1,
@@ -65,8 +65,8 @@ exports.contractUpdate = async (req, res) => {
     try{
         let info = {
             id:id,
-            document:detail.detail.document_number,
-            document_format:detail.detail.document_number,
+            document:detail.detail.document,
+            document_format:detail.detail.document_format,
             document_number:detail.detail.document_number,
             detail:detail.detail,
             section_1:detail.section_1,

@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 //Functions
 import { contractHandler } from '../../../../../function/contract'
 const ContractCreate = () => {
@@ -61,6 +62,8 @@ const ContractCreate = () => {
 
       const detail = {
         detail:{
+          document:document.getElementsByName('document_format')[1].value+document.getElementsByName('document_number')[1].value,
+          document_format:document.getElementsByName('document_format')[1].value,
           document_number:document.getElementsByName('document_number')[1].value,
           do_at:document.getElementsByName('do_at')[1].value,
           date:date2dash(document.getElementsByName('date')[1].value),
@@ -166,7 +169,8 @@ const ContractCreate = () => {
       return d[2] + "-" + d[1] + "-" + d[0];
   }
   
-    const validation = (check="") => {
+    const  validation = async (check="") => {
+      await checkDocumentDuplicate();
       return new Promise((resolve, reject) => {
         let valid = [];
         let invalid = [];
@@ -207,7 +211,60 @@ const ContractCreate = () => {
       });
     }
 
+    const checkDocumentDuplicate = () => {
+      return new Promise((resolve, reject) => {
+        const document_format = document.getElementsByName(`document_format`)[1].value;
+        const document_number = document.getElementsByName(`document_number`)[1].value;
 
+        if(document_number.toUpperCase() !== 'AUTO'){
+          
+          axios.post(process.env.REACT_APP_API+'/document-number-duplicate',
+                    { 
+                      document_format: document_format,
+                      document_number: document_number
+                    },
+                    {
+                        headers:{ authtoken }
+                    }
+                    ).then(res => {
+                      if(res.data.length > 0){
+                        document.getElementsByName(`frame-group`)[0].classList.add("border-alert");
+                        document.getElementsByName(`document_number`)[0].classList.remove("text-success")
+                        document.getElementsByName(`document_number`)[0].classList.add("text-danger")
+                        document.getElementsByName(`document_number`)[1].classList.remove("is-valid")
+                        document.getElementsByName(`document_number`)[1].classList.remove("is-invalid")
+                        document.getElementsByName('document_number')[1].value = 'AUTO';
+                        toast.error("Document number Can't duplicate will Change to Auto mode");
+                        return false;
+                      }else{
+                        document.getElementsByName(`frame-group`)[0].classList.remove("border-alert");
+                        resolve();
+                      }
+                       
+                    }).catch(err => {
+                        reject();
+                    })
+        }else{
+          axios.post(process.env.REACT_APP_API+'/document-number-auto',
+                    { 
+                      document_format: document_format,
+                      document_number: document_number
+                    },
+                    {
+                        headers:{ authtoken }
+                    }
+                    ).then(res => {
+                        document.getElementsByName(`frame-group`)[0].classList.remove("border-alert");
+                        document.getElementsByName('document_number')[1].value = res.data;
+                        resolve();
+                    }).catch(err => {
+                        reject();
+                    })
+        }
+        
+      });
+    }
+    
     const installment = [];
     for (let i = 0; i < installmentAmount; i++) {
         installment.push(<PartInstallment key={i} installment={i+1} final={installmentAmount} />);

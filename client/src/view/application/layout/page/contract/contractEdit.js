@@ -21,6 +21,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 //Functions
 import { updateContractHandler, handlerGetInfoEditContract } from '../../../../../function/contract'
 
@@ -28,6 +29,8 @@ const ContractEdit = () => {
     const [installmentAmount,setInstallmentAmount] = useState(0);
     const [currentTab, setCurrentTab] = useState(1);
     const [date, setDate] = useState();
+    const [oldDocumentFormat, setOldDocumentFormat] = useState();
+    const [oldDocumentNumber, setOldDocumentNumber] = useState();
     const [dateInstallment, setDateInstallment] = useState([]);
     const [createDate,setCreateDate] = useState();
     const installment = [];
@@ -60,6 +63,9 @@ const ContractEdit = () => {
         //Detail
           setDate(detail.date);
           setCreateDate(detail.create_date)
+          setOldDocumentFormat(detail.document_format);
+          setOldDocumentNumber(detail.document_number);
+          document.getElementsByName('document_format')[1].value = detail.document_format
           document.getElementsByName('document_number')[1].value = detail.document_number
           document.getElementsByName('do_at')[1].value = detail.do_at
           document.getElementsByName('date')[1].value = detail.date
@@ -142,6 +148,8 @@ const ContractEdit = () => {
 
       const detail = {
         detail:{
+          document:document.getElementsByName('document_format')[1].value+document.getElementsByName('document_number')[1].value,
+          document_format:document.getElementsByName('document_format')[1].value,
           document_number:document.getElementsByName('document_number')[1].value,
           do_at:document.getElementsByName('do_at')[1].value,
           date:date2dash(document.getElementsByName('date')[1].value),
@@ -248,7 +256,14 @@ const ContractEdit = () => {
       return d[2] + "-" + d[1] + "-" + d[0];
     
     }
-    const validation = (check="") => {
+    const validation = async (check="") => {
+      let nowDocumentFormat = document.getElementsByName('document_format')[1].value;
+      let nowDocumentNumber = document.getElementsByName('document_number')[1].value;
+      document.getElementsByName(`frame-group`)[0].classList.remove("border-alert");
+      if(oldDocumentFormat.toString()+oldDocumentNumber.toString() !== nowDocumentFormat.toString()+nowDocumentNumber.toString()){
+        await checkDocumentDuplicate();
+      }
+      
       return new Promise((resolve, reject) => {
         let valid = [];
         let invalid = [];
@@ -286,6 +301,60 @@ const ContractEdit = () => {
             resolve();
           }
         }
+      });
+    }
+
+    const checkDocumentDuplicate = () => {
+      return new Promise((resolve, reject) => {
+        const document_format = document.getElementsByName(`document_format`)[1].value;
+        const document_number = document.getElementsByName(`document_number`)[1].value;
+
+        if(document_number.toUpperCase() !== 'AUTO'){
+          
+          axios.post(process.env.REACT_APP_API+'/document-number-duplicate',
+                    { 
+                      document_format: document_format,
+                      document_number: document_number
+                    },
+                    {
+                        headers:{ authtoken }
+                    }
+                    ).then(res => {
+                      if(res.data.length > 0){
+                        document.getElementsByName(`frame-group`)[0].classList.add("border-alert");
+                        document.getElementsByName(`document_number`)[0].classList.remove("text-success")
+                        document.getElementsByName(`document_number`)[0].classList.add("text-danger")
+                        document.getElementsByName(`document_number`)[1].classList.remove("is-valid")
+                        document.getElementsByName(`document_number`)[1].classList.remove("is-invalid")
+                        // document.getElementsByName('document_number')[1].value = 'AUTO';
+                        toast.error("Document number Can't duplicate");
+                        return false;
+                      }else{
+                        document.getElementsByName(`frame-group`)[0].classList.remove("border-alert");
+                        resolve();
+                      }
+                       
+                    }).catch(err => {
+                        reject();
+                    })
+        }else{
+          axios.post(process.env.REACT_APP_API+'/document-number-auto',
+                    { 
+                      document_format: document_format,
+                      document_number: document_number
+                    },
+                    {
+                        headers:{ authtoken }
+                    }
+                    ).then(res => {
+                        document.getElementsByName(`frame-group`)[0].classList.remove("border-alert");
+                        document.getElementsByName('document_number')[1].value = res.data;
+                        resolve();
+                    }).catch(err => {
+                        reject();
+                    })
+        }
+        
       });
     }
     
