@@ -93,8 +93,8 @@ const ContractList = () => {
             // },
             {
               key: '3',
-              label: ('Print Contract'),
-              icon: <PrinterOutlined />
+              label: (<NavLink className="shadow-none nav-link" to="../../../pdf/contractFormPDF" target="_blank">Print Contract</NavLink>),
+              icon: <PrinterOutlined />,
             },
             {
               key: '4',

@@ -17,6 +17,7 @@ import LocationList from './view/application/layout/page/mapManage/locationList'
 import ContractList from './view/application/layout/page/contract/contractList'
 import ContractCreate from './view/application/layout/page/contract/contractCreate'
 import ContractEdit from './view/application/layout/page/contract/contractEdit'
+import ContractFormPDF from './view/application/layout/page/contract/pdf/contractFormPDF'
 
 //Notify
 import { ToastContainer } from 'react-toastify';
@@ -101,6 +102,7 @@ function App() {
                   <Route  path="contract/contractEdit/:contractID" element={<ContractEdit />} />
                 </Route>
               </Route>
+              <Route  path="pdf/contractFormPDF/" element={<ContractFormPDF />} />
             </Routes>
            </>
   )
