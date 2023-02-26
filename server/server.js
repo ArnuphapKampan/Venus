@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-
+const path = require('path');
 //Import Routes Example
 // const personRoutes = require('./routes/person')
 
@@ -21,6 +21,10 @@ app.listen(port,() => console.log('Server is running on port',port))
 app.use(morgan("dev"));
 app.use(bodyParser.json({limit:"2mb"}))
 app.use(cors())
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './build/index.html'), (err) => err && res.status(500).send(err));
+  });
 
 //Import Routes Example
 // app.use("/api",personRoutes)
