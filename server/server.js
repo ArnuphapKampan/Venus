@@ -22,9 +22,9 @@ app.use(morgan("dev"));
 app.use(bodyParser.json({limit:"2mb"}))
 app.use(cors())
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, './build/index.html'), (err) => err && res.status(500).send(err));
-  });
+// app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, './build/index.html'), (err) => err && res.status(500).send(err));
+//   });
 
 //Import Routes Example
 // app.use("/api",personRoutes)
