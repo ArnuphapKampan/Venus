@@ -8,7 +8,7 @@ import Header from '../header/header'
 import Content from './content/content'
 import Footer from '../footer/footerContent'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { Link as Smooths } from 'react-scroll';
 function Home() {
     const token = localStorage.token;
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function Home() {
           <Content/>
           <Footer/>
           <div className="up" >
-              <a href="#top"><FontAwesomeIcon icon={faChevronCircleUp} /> </a>
+              <Smooths to="top"><FontAwesomeIcon icon={faChevronCircleUp} /> </Smooths>
           </div>
       </>
   );

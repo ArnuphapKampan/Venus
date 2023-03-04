@@ -3,7 +3,7 @@
   color: inherit;
 }
 
-.up>a{
+.up{
   position: fixed;
   align-self: center;
   text-align: center;
@@ -17,7 +17,8 @@
   z-index: 3;
 }
 
-.up>a:hover{
+.up:hover{
+  cursor: pointer;
   font-size: 3.5rem;
   color:chocolate;
 }
@@ -70,6 +71,7 @@ h1, h2, h3, h4, h5, h6{
     border-bottom: 5px solid darkslategrey;
     transition: .5s;
 }
+
 
 .nav-items-me>ul>li:hover{
     cursor: pointer;

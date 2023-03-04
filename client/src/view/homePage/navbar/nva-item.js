@@ -1,6 +1,7 @@
 import '../../css/navbar.css';
 import logo from '../../../logo.svg';
 import { Link } from 'react-router-dom'
+import { Link as Smooths } from 'react-scroll';
 function NaveItems(){
     return(
         <div className="nav-items-me">
@@ -8,8 +9,8 @@ function NaveItems(){
             <ul>
                 <li>Customer</li>
                 <li>Building</li>
-                <li><a href="#content">Gallory</a></li>
-                <li><a href="#footer">Contact Us</a></li>
+                <li><Smooths to="content">Gallory</Smooths></li>
+                <li><Smooths to="footer">Contact Us</Smooths></li>
                 <li><Link to={'/sign-in'}>Sign in</Link></li>
                 
             </ul>
