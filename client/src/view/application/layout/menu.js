@@ -45,6 +45,21 @@ const Menu = ({counter}) => {
                             </NavLink>
                         </nav>
                     </div>
+                    <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePagesHome" aria-expanded="false" aria-controls="collapsePagesContract" style={{color:'#6c757d'}}>
+                        <i className="fas fa-home"></i>
+                        <div className="sb-nav-link-icon"></div>
+                        Home Page
+                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </NavLink>
+                    <div className="collapse" id="collapsePagesHome" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                        <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <NavLink style={{borderRight: (userStorage.activeMenu === "gallery")?'5px solid skyblue':'',color: (userStorage.activeMenu === "gallery")?'#007bff':'#6c757d'}} className="nav-link" to={"gallery/"}>
+                            <i className="fas fa-camera-retro"></i>
+                                <div className="sb-nav-link-icon"></div>
+                                Gallery
+                            </NavLink>
+                        </nav>
+                    </div>
                     <NavLink className="nav-link collapsed" to="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" style={{color:'#6c757d'}}>
                         <i className="fas fa-cogs"></i>
                         <div className="sb-nav-link-icon"></div>

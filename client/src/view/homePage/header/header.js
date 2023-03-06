@@ -4,7 +4,7 @@ function Header(){
     return(
         <div className="bg-image-header">
             <div className="header-image" id="top">
-                <h2>WELCOME TO MY WEBSITE</h2>
+                <h2>WELCOME TO KP.HOUSE CONSTRUCTION WEBSITE</h2>
                 <p>
                     Lorem ipsum odor amet, consectetuer adipiscing elit. Ac purus in massa egestas mollis varius;
                     dignissim elementum. Mollis tincidunt mattis hendrerit dolor eros enim, nisi ligula ornare.

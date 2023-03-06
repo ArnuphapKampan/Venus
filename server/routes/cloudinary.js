@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { cloudinaryImage, cloudinaryRemove, cloudinaryLocationImage } = require('../controllers/cloudinary')
+const { cloudinaryImage, cloudinaryRemove, cloudinaryLocationImage, cloudinaryGalleryImage } = require('../controllers/cloudinary')
 //middleware
 const { auth } = require('../middleware/auth');
 
@@ -15,6 +15,10 @@ router.post('/cloudinary-image',auth,cloudinaryImage);
 // @access Private
 router.post('/cloudinary-location-image',auth,cloudinaryLocationImage);
 
+// @route POST localhost:8888/api/cloudinary-gallery-image
+// @desc  Route cloudinary-gallery-image
+// @access Private
+router.post('/cloudinary-gallery-image',auth,cloudinaryGalleryImage);
 
 // @route POST localhost:8888/api/cloudinary-remove
 // @desc  Route cloudinary-remove

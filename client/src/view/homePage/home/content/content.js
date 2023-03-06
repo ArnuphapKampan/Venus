@@ -1,12 +1,30 @@
-import { useState } from 'react';
-import imageItems from '../../../../data/data';
+import { useState,useEffect } from 'react';
+// import imageItems from '../../../../data/data';
 import '../../../css/content.css';
 import Carousel from './carousel'
 import ContentPopup from './contentPopup'
 import Items from './items'
-
+import { galleryListHomePage } from '../../../../query/gallery/galleryListHomePage';
 function Content(){
     const [selectedImage, setselectedImage] = useState(null);
+    const [imageItems, setImageItems] = useState([]);
+    useEffect(() => {
+        loadGalleryList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
+    const loadGalleryList = () =>{
+        galleryListHomePage().then( (res) => {
+            setImageItems(
+                  res.data.map( (row) => (
+                      {
+                        image: row.picture,
+                      })
+                  ));
+        }).catch( err => {
+          console.log(err.response.data.msg)
+        });
+      }
 
     function onPopUp(val){
         setselectedImage(val)

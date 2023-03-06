@@ -35,6 +35,21 @@ exports.cloudinaryLocationImage = async (req, res) => {
     }
 }
 
+exports.cloudinaryGalleryImage = async (req, res) => {
+
+    try{
+        const result = await cloudinary.uploader.upload(req.body.image,{
+            public_id: Date.now(),
+            result_type:'auto',
+        },
+        {folder: 'gallery'});
+        res.send(result)
+        
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
 exports.cloudinaryRemove = async (req, res) => {
     try{
         let image_id = req.body.publicID;

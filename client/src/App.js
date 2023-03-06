@@ -18,7 +18,10 @@ import ContractList from './view/application/layout/page/contract/contractList'
 import ContractCreate from './view/application/layout/page/contract/contractCreate'
 import ContractEdit from './view/application/layout/page/contract/contractEdit'
 import ContractFormPDF from './view/application/layout/page/contract/pdf/contractFormPDF'
-
+//HomePage
+import GalleryList from './view/application/layout/page/homePage/galleryList'
+import GalleryCreate from './view/application/layout/page/homePage/galleryCreate'
+import GalleryEdit from './view/application/layout/page/homePage/galleryEdit'
 //Notify
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -87,19 +90,29 @@ function App() {
               <Route path="/sign-in" element={<LoginPage messageCount={messageCount} />} />
               <Route element={<UserRoute />}>
                 <Route path="application/" element={<Application counter={counter} />}>
+                  #home 
                   <Route  path="" element={<Content />} />
+                  #user
                   <Route  path="user/" element={<UserList />} /> 
                   <Route  path="user/register/" element={<Register />} />  
                   <Route  path="user/editUser/:userID" element={<EditUser />} />  
+                  #profile
                   <Route  path="profile/:userID" element={<Profile />} />  
+                  #messages
                   <Route  path="message/" element={<Message setCounter={setCounter} />} />  
+                  #location
                   <Route  path="map/" element={<Map />} />  
                   <Route  path="mapManage/" element={<LocationList />} />
                   <Route  path="mapManage/location/" element={<Location />} /> 
                   <Route  path="mapManage/editLocation/:locationID" element={<EditLocation />} /> 
+                  #contract
                   <Route  path="contract/" element={<ContractList />} /> 
                   <Route  path="contract/contractCreate/" element={<ContractCreate />} />
                   <Route  path="contract/contractEdit/:contractID" element={<ContractEdit />} />
+                  #home page
+                  <Route  path="gallery/" element={<GalleryList />} /> 
+                  <Route  path="gallery/galleryCreate/" element={<GalleryCreate />} /> 
+                  <Route  path="gallery/galleryEdit/" element={<GalleryEdit />} /> 
                 </Route>
               </Route>
               <Route  path="pdf/contractFormPDF/" element={<ContractFormPDF />} />
