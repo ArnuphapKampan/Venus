@@ -1,0 +1,1 @@
+CREATE TABLE `venus`.`log_login` (`log_id` INT NOT NULL AUTO_INCREMENT , `log_username` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `log_IPaddress` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `log_date` DATETIME NOT NULL , `status` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , PRIMARY KEY (`log_id`)) ENGINE = InnoDB;

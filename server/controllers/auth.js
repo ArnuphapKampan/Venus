@@ -1,6 +1,8 @@
 const { checkUsername } = require('./query/checkUsername')
 const { checkLogin } = require('./query/checkLogin')
 const { updateTimeLogin } = require('./query/updateTimeLogin')
+const { logLogin } = require('./query/logLogin')
+const requestIp = require('request-ip')
 const { insertUser } = require('./query/insert-user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -40,17 +42,26 @@ exports.createRegister = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     const { username,password } = req.body;
     try{
+        const clientIp = requestIp.getClientIp(req)
+        const IPv4Split = clientIp.split(':');
+        const IPv4 = IPv4Split[IPv4Split.length-1];
+
+        let logInfo = {
+            ipaddress:IPv4,
+            username:username,
+        };
         //check username
         const user = await checkLogin(username);
 
         if(user.length <= 0){
+            await logLogin(logInfo,'Login Fales');
             return res.status(400).json({ msg: 'Username Invalid Credentials' })
         }
 
         //Compare Encrypt passwords
         
         const isMatch = await bcrypt.compare(password,user[0].password); 
-
+    
         if(!isMatch){
             return res.status(400).json({ msg: 'Password Invalid Credentials' })
         }
@@ -58,7 +69,7 @@ exports.login = async (req, res, next) => {
         if(user[0].enable !== "enable"){
             return res.status(400).json({ msg: 'Username has not been approved yet.' })
         }
-
+        await logLogin(logInfo,'Login Pass');
         //payload return jsonwebtoken
         const payload = {
             user:{
